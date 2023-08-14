@@ -761,7 +761,7 @@ Game.Explore = {
             totalXPGained += Game.Enemies[enemy.id].xp;
         });        
         // Distribute XP among healthy dragons, and notify player.
-        var perDragonXPGained = Decimal(totalXPGained / healthyDragonsIndices.length).toPrecision(2)
+        var perDragonXPGained = Math.floor(totalXPGained / healthyDragonsIndices.length);
         $.each(healthyDragonsIndices, ( _ , dragonIndex) => {
             // Process XP gains
             $("#encounter-log").prepend($("<div>")

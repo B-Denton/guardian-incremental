@@ -56,11 +56,11 @@ class Dragon {
 
     levelUp() {
         var xpNeeded = this.experienceNeeded(this.level);
-        this.xp -= xpNeeded;
+        this.xp = 0;
         this.level++;
         $.each(['hp', 'attack', 'defense', 'speed'], ( _ , item) => {
             this[item].max = Math.round((this[item].max * 1.1) * 100) / 100 ;
-            this[item].value = Math.round((this[item].value * 1.1) * 100) / 100;
+            this[item].value = this[item].max;
         })
     };
 
