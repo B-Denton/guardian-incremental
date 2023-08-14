@@ -75,12 +75,14 @@ Game.ActionHandler = {
                         btn.prop('disabled', false);
                     }, 500);
                 } else {
-                    // TO ADD: notify player that they can't afford.
+                    log.addNotification("You can't afford this.", "warning");
                 }
             });
 
         if (action.type == "build" || action.type == "upgrade") {
-            this.createBuildCount(actionButton, action);
+            if (action.repeatable) {
+                this.createBuildCount(actionButton, action);
+            } 
         }
         
         return actionButton

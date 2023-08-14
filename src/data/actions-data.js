@@ -2,11 +2,15 @@
 
 // Holds the default information about actions that the players can take to generate and spend resources.
 Game.ActionsData = {
+
+    // PLAYER
+
     "search": {
         actionID: "search",
         actionName: "Search",
         actionDescription: "Search the debris",
         type: "player",
+        repeatable: true,
         isVisible: true,
         count: 0, 
         cost: [],
@@ -22,11 +26,14 @@ Game.ActionsData = {
         },
     },
 
+    // BUILD
+
     "buildNest": {
         actionID: "buildNest",
         actionName: "Dragon Nest",
         actionDescription: "Build a dragon's nest",
         type: "build",
+        repeatable: true,
         isVisible: false,
         count: 0,
         cost: [
@@ -47,6 +54,7 @@ Game.ActionsData = {
         actionName: "Jackalope Warren",
         actionDescription: "Build a cosy warren for Jackalopes",
         type: "build",
+        repeatable: true,
         isVisible: false,
         count: 0,
         cost: [
@@ -60,6 +68,31 @@ Game.ActionsData = {
             log.addNotification("You build a new warren for a Jackalope pair.", "none")
             playerResources["jackalope"].amount += 2;
         }
-    }
+    },
+
+    // UPGRADE
+
+    "jackalopeMatingRituals": {
+        actionID: "jackalopeMatingRituals",
+        actionName: "Jackalope Mating Rituals",
+        actionDescription: "Find a way to encourage the jackalope to... make more jackalope.",
+        type: "upgrade",
+        repeatable: false,
+        isVisible: false,
+        count: 0,
+        cost: [
+            { resource: "fire", growthRate: 1.5, baseCost: 20 },
+        ],
+        produce: { 
+            "jackalopeProductionUpgrade": "Jackalope Production" 
+        },
+        action: function() {
+            log.addNotification("Jackalope will now produce offspring!", "none")
+            console.log(Game.Resources.PlayerResources['jackalope'].generation )
+            Game.Resources.PlayerResources['jackalope'].generation.push({"resource": "jackalope", "baseGeneration": 0.001}) 
+            Game.ActionsList["jackalopeMatingRituals"].isVisible = false;
+            Game.Field.activate();
+        }
+    },
 
 };

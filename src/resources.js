@@ -34,7 +34,7 @@ Game.Resources = {
             if (resource.isVisible) {
                 resourceContainerID.append($("<div>")
                     .attr("class", "resource " + resource.type)
-                    .html(resource.resourceName + ": " + Decimal.floor(resource.amount) + " (" + Decimal(resource.income * Game.GAME_INTERVAL).toSD(4) + "/s)"))
+                    .html(resource.resourceName + ": " + Decimal.floor(resource.amount) + " (" + Decimal(resource.income * Game.GAME_INTERVAL).toSD(2) + "/s)"))
             }
         });
   

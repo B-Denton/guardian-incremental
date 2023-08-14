@@ -4,6 +4,10 @@ Game.AdvancementData = {
     // Stores information about various conditions that enable game progression,
     // and what happens when they trigger.
     // key: advancementID, value: information
+
+
+    // AREA UNLOCKS
+
     "caveUnlock": { 
         advancementID: "caveUnlock",  
         hasTriggered: false,  // boolean: whether advancement has already been achieved
@@ -35,6 +39,20 @@ Game.AdvancementData = {
         }
     },
 
+    "exploreUnlock": {
+        hasTriggered: false, 
+        shouldTrigger: () =>  { 
+            return ( playerResources["jackalope"].amount >= 10 );
+        },
+        activate: () => {  
+            Game.AreaHandler.unlockArea("explore");
+            log.addNotification("The jackalope are grateful for your help. \
+                                They eagerly tell you about a purple egg they saw beyond the forest.", "progress");
+        }
+    },
+
+    // CREATURE UNLOCKS
+
     "jackalopeUnlock": {  
         hasTriggered: false, 
         shouldTrigger: () =>  { 
@@ -47,16 +65,18 @@ Game.AdvancementData = {
         }
     },
 
-    "exploreUnlock": {
+    // UPGRADES
+
+    "jackalopeMatingRitualUnlock": {  
         hasTriggered: false, 
         shouldTrigger: () =>  { 
-            return ( playerResources["jackalope"].amount >= 10 );
+            return (playerResources["jackalope"].amount >= 2 );
         },
         activate: () => {  
-            Game.AreaHandler.unlockArea("explore");
-            log.addNotification("The jackalope are grateful for your help. \
-                                They eagerly tell you about a purple egg they saw beyond the forest.", "progress");
+            Game.ActionsList["jackalopeMatingRituals"].isVisible = true;
+            field.activate();
         }
-    }
+    },
+
 
 }
