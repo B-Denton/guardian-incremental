@@ -65,7 +65,22 @@ Game.AdvancementData = {
         }
     },
 
-    // UPGRADES
+    // ACTION UNLOCKS
+
+    //// PLAYER ACTION UNLOCKS
+
+    "teamTrainingUnlock": {  
+        hasTriggered: false, 
+        shouldTrigger: () =>  { 
+            return (Game.Roster.rosterDragons.some(item => item != undefined));
+        },
+        activate: () => {  
+            Game.ActionsList["train"].isVisible = true;
+            log.addNotification("These dragons seem strong... but inexperienced. Some training may help them prepare for the fights ahead.", "progress");
+        }
+    },
+
+    //// UPGRADE ACTION UNLOCKS
 
     "jackalopeMatingRitualUnlock": {  
         hasTriggered: false, 

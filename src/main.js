@@ -5,8 +5,8 @@ window.Game = window.Game || {};
 $.extend(Game, {
     GAME_NAME: "The Dragons' Guardian",
     // Version information
-    CURRENT_VERSION: "0.10",
-    ORIGINAL_VERSION: "0.10",
+    CURRENT_VERSION: "0.1.01",
+    ORIGINAL_VERSION: "0.1",
     VERSION_NAME: "The Beginning",
     // Number handling
     EPSILON: 1e-6,  // accuracy for floating-point equality comparisons

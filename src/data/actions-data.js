@@ -26,6 +26,29 @@ Game.ActionsData = {
         },
     },
 
+    "train": {
+        actionID: "train",
+        actionName: "Team Training",
+        actionDescription: "Run through some combat exercises with the dragons on your team!",
+        type: "player",
+        repeatable: true,
+        isVisible: false,
+        count: 0, 
+        cost: [{ resource: "fire", growthRate: 1.01, baseCost: 5 }],
+        produce: { 
+        },
+        action: function() {
+            $.each(Game.Roster.rosterDragons, (i, dragon) => {
+                if (dragon) {
+                    var teamSize = Game.Roster.rosterDragons.filter(function(value) { return value !== undefined }).length;
+                    console.log(teamSize)
+                    dragon.xp += Math.floor(12 / teamSize);
+                    Game.Roster.updateRosterSlot(i, dragon); 
+                }
+            })
+        },
+    },
+
     // BUILD
 
     "buildNest": {
@@ -88,8 +111,7 @@ Game.ActionsData = {
         },
         action: function() {
             log.addNotification("Jackalope will now produce offspring!", "none")
-            console.log(Game.Resources.PlayerResources['jackalope'].generation )
-            Game.Resources.PlayerResources['jackalope'].generation.push({"resource": "jackalope", "baseGeneration": 0.001}) 
+            Game.Resources.PlayerResources['jackalope'].generation.push({"resource": "jackalope", "baseGeneration": 0.00001}) 
             Game.ActionsList["jackalopeMatingRituals"].isVisible = false;
             Game.Field.activate();
         }
