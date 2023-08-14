@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+
+        <title>The Dragons' Guardian</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- Open Graph meta-tags for social media compatability -->
+        <meta property="og:title" itemprop="name" content="The Dragons' Guardian" />
+        <meta property="og:description" itemprop="description" name="description" content="An incremental web game built in HTML, CSS, and Javascript." />
+        <!-- <meta property="og:url" content="" /> -->
+
+        <!-- Appearance -->
+        <link href="./css/main.css" rel="stylesheet" type="text/css" title="default" />
+        <link rel="icon" type="image/x-icon" href="data:">  <!-- Replace with a favicon when created -->
+
+        <!-- Libraries -->
+        <!-- jQuery: simplifies DOM traversal / manipulation, event handling, AJAX -->
+        <script type="text/javascript" src="src/lib/jquery.min.js"></script>
+        <!-- Pako: for compression / decompression -->
+        <script type="text/javascript" src="src/lib/pako.min.js"></script>
+        <!-- Decimal: provides arbitrary-precision Decimal type for Javascript -->
+        <script type="text/javascript" src="src/lib/decimal.min.js"></script>
+
+        <!-- Main files -->
+        
+        <script type="text/javascript" src="src/main.js"></script>
+
+        <script type="text/javascript" src="src/actions.js"></script>
+        <script type="text/javascript" src="src/advancements.js"></script>
+        <script type="text/javascript" src="src/area-handler.js"></script>
+        <script type="text/javascript" src="src/log.js"></script>
+        <script type="text/javascript" src="src/resources.js"></script>
+        <script type="text/javascript" src="src/roster.js"></script>
+        <script type="text/javascript" src="src/save.js"></script>
+        <script type="text/javascript" src="src/settings.js"></script>
+        <script type="text/javascript" src="src/tooltip.js"></script>
+        
+        <!-- Area files-->
+        <script type="text/javascript" src="src/area/explore.js"></script>
+        <script type="text/javascript" src="src/area/field.js"></script>
+        <script type="text/javascript" src="src/area/hatchery.js"></script>
+        <script type="text/javascript" src="src/area/reserve.js"></script>
+
+        <!-- Data files -->
+        <script type="text/javascript" src="src/data/actions-data.js"></script>
+        <script type="text/javascript" src="src/data/advancement-data.js"></script>
+        <script type="text/javascript" src="src/data/dragon-data.js"></script>
+        <script type="text/javascript" src="src/data/element-data.js"></script>
+        <script type="text/javascript" src="src/data/egg-data.js"></script>
+        <script type="text/javascript" src="src/data/explore-data.js"></script>
+        <script type="text/javascript" src="src/data/resource-data.js"></script>
+        
+
+
+        <!-- Simplified Reference Variables -->
+        <script>
+            var main = Game.Main;
+            // UI
+            var log = Game.Log;
+            var roster = Game.Roster;
+            var tooltip = Game.Tooltip;
+            // Areas
+            var explore = Game.Explore;
+            var field = Game.Field;
+            var hatchery = Game.Hatchery;
+            var reserve = Game.Reserve;
+            // Gameplay
+            var resources = Game.Resources;
+            var playerResources = Game.Resources.PlayerResources;
+        </script>
+
+    </head>
+
+    <body>
+
+        <div id = "wrapper">
+            <div id = "game">
+
+                <!-- Top -->
+                <div class="header" id="header-bar">
+                    <h2 id="game-name"></h1>
+                    <h4 id="game-version"></h3>
+                </div>
+
+                <!-- Center-->
+                <div class="row" id="main-table">
+                    <!-- Left Column -->
+                    <div class="col" id="left-column">
+                        <div id="roster"></div>
+                        <div id="game-log"></div>
+                    </div>
+
+                    <!-- Center Column-->
+                    <div class="col" id="center-column">
+                        <nav id="area-navigation"></nav>
+                        <main id="area-content"></main>
+                    </div>
+
+                    <!-- Right Column -->
+                    <div class="col" id="right-column">
+                        <div id="player-resources"></div>
+                        <div id="tooltip-panel"></div>
+                    </div>
+                </div>
+
+                <!-- Bottom -->
+                <div class="footer" id="footer-bar"></div>
+
+            </div>
+        </div>
+
+    </body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
