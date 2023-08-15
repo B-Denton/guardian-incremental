@@ -20,30 +20,42 @@ class Enemy {
 }
 
 Game.Enemies = {
-    "wolf": {
-        "id": "wolf",
-        "name": "Wolf",
-        "color": "black",
-        "hp": 10,
-        "attack": 1,
-        "defense": 1,
-        "speed": 2,
-        "xp": 50,
-        "hasDefeated": false
-    },
-
+   
     "bear": {
         "id": "bear",
         "name": "Bear",
         "color": "black",
         "hp": 15,
-        "attack": 2,
+        "attack": 10,
         "defense": 3,
         "speed": 1,
         "xp": 100,
         "hasDefeated": false
     },
 
+    "fallenTree": {
+        "id": "fallenTree",
+        "name": "Fallen Tree",
+        "color": "black",
+        "hp": 100,
+        "attack": 0,
+        "defense": 2,
+        "speed": 0,
+        "xp": 150,
+        "hasDefeated": false
+    },
+
+    "wolf": {
+        "id": "wolf",
+        "name": "Wolf",
+        "color": "black",
+        "hp": 10,
+        "attack": 5,
+        "defense": 2,
+        "speed": 2,
+        "xp": 50,
+        "hasDefeated": false
+    }
 
 },
 
@@ -106,7 +118,7 @@ Game.ExploreData = {
             "areaName": "Forest",
             "areaDescription": "A once-beautiful forest that has been twisted by the recent upheaval.",
             "isVisible": true,
-            "lastEncounter": 2
+            "lastEncounter": 3
         },
         "encounters": {
             1: {
@@ -130,6 +142,22 @@ Game.ExploreData = {
             },
 
             2: {
+                "encounterID": 2,
+                "encounterName": "Fallen Tree",
+                "encounterDescription": "A large tree blocks your path. Going around it would take too long.",
+                "encounterFaced": false,
+                "encounterBeaten": false,
+                "enemies": [
+                    new Enemy(Game.Enemies["fallenTree"], "Fallen Tree")
+                ],
+                "standardStrategyAvailable": true,
+                "additionalStrategyOptions": undefined,
+                startOfRound: (roster, enemies) => {
+                    return;
+                }
+            },
+
+            3: {
                 "encounterID": 2,
                 "encounterName": "Wolves and Bears",
                 "encounterDescription": "A second group of wolves block your path, but this time they brought company.",

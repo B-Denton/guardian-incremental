@@ -21,7 +21,10 @@ class Egg {
         };
     }
 
-    getIsEggHatchingText(temperature) {
+    getIsEggHatchingText(temperature, hatchingProgress) {
+        if (hatchingProgress >= 100) {
+            return "The egg is ready to hatch!"
+        }
         // return text, hinting player towards ideal temperature.
         if (temperature < this.minHatchingTemperature) {
             return "The egg is too cold...";

@@ -82,7 +82,7 @@ Game.Elements = {
         "ruby": {
             hatchingSpeed: 1,
             minHatchingTemperature: 10,
-            maxHatchingTemperature: 60
+            maxHatchingTemperature: 30
         },
 
         "cloud": {

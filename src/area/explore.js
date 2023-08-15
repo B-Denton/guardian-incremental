@@ -22,6 +22,10 @@ Game.Explore = {
     },
 
     setup() {  // load area variables from saved data
+
+        if (testing) {
+            explore.isUnlocked = true;
+        }
         
     },
 
@@ -735,12 +739,12 @@ Game.Explore = {
             .filter(String)
         // Format wounded dragon names based on number.
         var woundedDragonNames = ""
-        $.each(woundedDragonsIndices, ( i , dragonIndex) => {
+        $.each(woundedDragonsIndices, (i , dragonIndex) => {
             if (woundedDragonsIndices.length > 1) {
-                if (i > (woundedDragonsIndices.length - 1 )) {
+                if (i == woundedDragonsIndices.length-1) {
                     woundedDragonNames += "and " + roster.rosterDragons[dragonIndex].name + " were ";
                 } else {
-                    woundedDragonNames += roster.rosterDragons[dragonIndex].name + ","
+                    woundedDragonNames += roster.rosterDragons[dragonIndex].name + ", "
                 } 
             } else {
                 woundedDragonNames += roster.rosterDragons[dragonIndex].name + " was "

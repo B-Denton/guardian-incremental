@@ -82,13 +82,13 @@ Game.AdvancementData = {
 
     //// UPGRADE ACTION UNLOCKS
 
-    "jackalopeMatingRitualUnlock": {  
+    "jackalopeCourtingRitualsUnlock": {  
         hasTriggered: false, 
         shouldTrigger: () =>  { 
             return (playerResources["jackalope"].amount >= 2 );
         },
         activate: () => {  
-            Game.ActionsList["jackalopeMatingRituals"].isVisible = true;
+            Game.ActionsList["jackalopeCourtingRituals"].isVisible = true;
             field.activate();
         }
     },

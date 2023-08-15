@@ -19,6 +19,12 @@ Game.Reserve = {
     },
 
     setup() {  // load area variables from saved data
+
+        if (testing) {
+            reserve.addDragon(new Dragon("ruby"));
+            reserve.addDragon(new Dragon("ruby"));
+            reserve.addDragon(new Dragon("ruby"));
+        }
         
     },
 
@@ -195,7 +201,12 @@ Game.Reserve = {
     },
 
     loadEmptySlotElements(container, i) {
-        container.append($("<h4>").html("Reserve Space")); // Slot Title
+        // Slot Title
+        container.append($("<div>")
+            .attr("class", "weighted title")
+            .attr("style", "margin-top: 10px;")
+            .html("Reserve Space")
+            ); 
     },
 
     calculateIncome() {

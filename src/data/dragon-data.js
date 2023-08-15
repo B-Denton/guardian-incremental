@@ -55,7 +55,6 @@ class Dragon {
     };
 
     levelUp() {
-        var xpNeeded = this.experienceNeeded(this.level);
         this.xp = 0;
         this.level++;
         $.each(['hp', 'attack', 'defense', 'speed'], ( _ , item) => {

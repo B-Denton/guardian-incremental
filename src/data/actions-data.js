@@ -99,10 +99,12 @@ Game.ActionsData = {
 
     // UPGRADE
 
+    //// UPGRADE CREATURES
+
     "jackalopeMatingRituals": {
         actionID: "jackalopeMatingRituals",
         actionName: "Jackalope Mating Rituals",
-        actionDescription: "Find a way to encourage the jackalope to... make more jackalope.",
+        actionDescription: "Encourage the jackalope to... make more jackalope.",
         type: "upgrade",
         repeatable: false,
         isVisible: false,
@@ -117,6 +119,30 @@ Game.ActionsData = {
             log.addNotification("Jackalope will now produce offspring!", "none")
             Game.Resources.PlayerResources['jackalope'].generation.push({"resource": "jackalope", "baseGeneration": 0.00001}) 
             Game.ActionsList["jackalopeMatingRituals"].isVisible = false;
+            Game.Field.activate();
+        }
+    },
+
+    //// UPGRADE HATCHERY
+
+    "jackalopeCourtingRituals": {
+        actionID: "jackalopeCourtingRituals",
+        actionName: "Jackalope Courting Rituals",
+        actionDescription: "Encourage the jackalope to... make more jackalope.",
+        type: "upgrade",
+        repeatable: false,
+        isVisible: false,
+        count: 0,
+        cost: [
+            { resource: "fire", growthRate: 1.5, baseCost: 20 },
+        ],
+        produce: { 
+            "jackalopeProductionUpgrade": "Jackalope Production" 
+        },
+        action: function() {
+            log.addNotification("Jackalope will now produce offspring!", "none")
+            Game.Resources.PlayerResources['jackalope'].generation.push({"resource": "jackalope", "baseGeneration": 0.00001}) 
+            Game.ActionsList["jackalopeCourtingRituals"].isVisible = false;
             Game.Field.activate();
         }
     },

@@ -485,27 +485,37 @@ div {
 }
 
 .hatchery-slot {
-  background-color: var(--pale);
   display: block;
-  text-align: center;
   width: 200px;
-  min-height: 220px;
+  min-height: 250px;
   margin: 10px auto;
-  padding: 10px 10px;
+  padding: 20px 10px;
+  background-color: var(--pale);
   border: 2px solid var(--dark);
   box-shadow: 0 3px 3px 0 var(--secondary-color-2);
   font-size: var(--font-size-small);
+  text-align: center;
+  line-height: 2;
 }
 
 .egg-select-container {
   display: grid;
-  padding: auto 10px;
+  padding: 20px 0px;
   grid-template-columns: 1fr 1fr;
+  border-top: 1px var(--dark) dashed;
 }
 
 .egg-select-option {
   display: inline-block;
-  text-decoration: none;
+  padding: 5px 0px;
+  border-top: 1px solid;
+  border-bottom: 1px solid;
+  cursor: pointer;
+}
+
+.increase-heat.button, .hatch-egg.button {
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 /* RESERVE */
