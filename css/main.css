@@ -451,9 +451,8 @@ div {
 
 .action-type-container {
   display: grid;
-  padding: 0px 10px;
-  margin: 10px 0px;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-columns: repeat(auto-fit, 260px);
+  margin-top: 10px;
 }
 
 .action.button {
@@ -468,11 +467,11 @@ div {
 
 .build-count {
   position: absolute;
-  border: 1px solid var(--dark);
+  border-left: 1px var(--dark) solid;
   width: 20%;
   height: 100%;
-  top: -1px;
-  right: -1px;
+  top: 0px;
+  right: 0px;
   text-align: center;
 }
 
@@ -480,8 +479,7 @@ div {
 
 #hatchery-grid {
   display: grid;
-  padding: 30px 10px;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-columns: repeat(auto-fit, 250px);
 }
 
 .hatchery-slot {
@@ -521,9 +519,9 @@ div {
 /* RESERVE */
 
 #reserve-grid {
+  margin: 20px 0px;
   display: grid;
-  padding: 30px 10px;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  grid-template-columns: repeat(auto-fit, 200px);
 }
 
 .reserve-slot {
