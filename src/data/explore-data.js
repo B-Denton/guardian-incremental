@@ -118,6 +118,7 @@ Game.ExploreData = {
             "areaName": "Forest",
             "areaDescription": "A once-beautiful forest that has been twisted by the recent upheaval.",
             "isVisible": true,
+            "isBeaten": false,
             "lastEncounter": 3
         },
         "encounters": {
@@ -158,7 +159,7 @@ Game.ExploreData = {
             },
 
             3: {
-                "encounterID": 2,
+                "encounterID": 3,
                 "encounterName": "Wolves and Bears",
                 "encounterDescription": "A second group of wolves block your path, but this time they brought company.",
                 "encounterFaced": false,

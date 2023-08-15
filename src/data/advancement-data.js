@@ -65,6 +65,18 @@ Game.AdvancementData = {
         }
     },
 
+    // DRAGON UNLOCKS
+
+    "cloudDragonUnlock": {  
+        hasTriggered: false, 
+        shouldTrigger: () =>  { 
+            return ( Game.ExploreData["forest"]["area"].isBeaten );
+        },
+        activate: () => {  
+            resources.PlayerResources["eggCloud"].amount++;
+        }
+    },
+
     // ACTION UNLOCKS
 
     //// PLAYER ACTION UNLOCKS

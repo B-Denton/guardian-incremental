@@ -70,10 +70,10 @@ Game.Elements = {
                 baseXP: 100
             },
             combat: {
-                "baseHP": 0,
-                "baseAttack": 0,
-                "baseDefense": 0,
-                "baseSpeed": 0
+                "baseHP": 8,
+                "baseAttack": 3,
+                "baseDefense": 3,
+                "baseSpeed": 5
             }
         }
     },

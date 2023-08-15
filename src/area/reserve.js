@@ -24,6 +24,9 @@ Game.Reserve = {
             reserve.addDragon(new Dragon("ruby"));
             reserve.addDragon(new Dragon("ruby"));
             reserve.addDragon(new Dragon("ruby"));
+            reserve.addDragon(new Dragon("ruby"));
+            reserve.addDragon(new Dragon("ruby"));
+            reserve.addDragon(new Dragon("ruby"));
         }
         
     },

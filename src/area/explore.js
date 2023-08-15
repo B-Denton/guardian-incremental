@@ -58,7 +58,24 @@ Game.Explore = {
         function createAreaSelectButton(areaID) {
             // Helper function for generating buttons for selecting an Explore area
             var areaInformation = Game.ExploreData[areaID]["area"];
-            const exploreButton = $("<button>")
+
+            if (areaInformation["isBeaten"]) {
+                const exploreButton = $("<button>")
+                .attr("class", "explore button area-beaten")
+                .attr("id", "explore-button-" + areaID)
+                .prop("disabled", true)
+                .html("Explore the " + areaInformation.areaName)
+                .hover(
+                    function() { // Handler In
+                        Game.Tooltip.showBasicDescription("This area has been fully explored!");
+                    },
+                    function() { // Handler Out
+                        Game.Tooltip.showEmptyTooltip();   
+                    }
+                )
+                return exploreButton;
+            } else {
+                const exploreButton = $("<button>")
                 .attr("class", "explore button")
                 .attr("id", "explore-button-" + areaID)
                 .html("Explore the " + areaInformation.areaName)
@@ -74,7 +91,10 @@ Game.Explore = {
                     Game.Tooltip.showEmptyTooltip();
                     Game.Explore.loadNextEncounter(areaID);
                 });
-            return exploreButton;
+                return exploreButton;
+            }
+
+            
         }
 
         areaContent.append($("<div>")
@@ -525,58 +545,6 @@ Game.Explore = {
             return rosterTeam.every((dragon) => dragon.hp.value <= 0)
         }
 
-        function winEncounter() {
-            // Announce encounter outcome
-            $("#encounter-log").prepend($("<div>")
-                .attr("class", "notification-message encounter none")
-                .attr("style", "font-weight: bold;")
-                .html("You win!  <br><br><hr>")
-            );
-            // Distribute experience among dragons.
-            explore.distributeXP(explore.currentEncounter["enemies"]);
-            // Update area Information
-            Game.ExploreData[Game.Explore.currentAreaID]["encounters"][Game.Explore.currentEncounter.encounterID]["encounterFaced"] = true;
-            Game.ExploreData[Game.Explore.currentAreaID]["encounters"][Game.Explore.currentEncounter.encounterID]["encounterBeaten"] = true;
-            // Update creature Information
-            $.each(explore.currentEncounter["enemies"], ( _ , enemy) => {
-                Game.Enemies[enemy.id].hasDefeated = true;
-            })
-            // Reset variables
-            explore.currentEncounter = undefined;
-            explore.encounterStarted = false;
-            explore.inEncounter = false;
-            // Update left-hand roster
-            $.each(Game.Roster.rosterDragons, (i, dragon) => {
-                Game.Roster.updateRosterSlot(i, dragon)
-            });
-            // Show Button to load next encounter in area.
-            $("#next-encounter-button").attr("style", "display: block");
-        }
-
-        function loseEncounter() {    
-            $("#encounter-log").prepend($("<div>")
-                .attr("class", "notification-message encounter none")
-                .attr("style", "font-weight: bold;")
-                .html("The encounter proved too difficult for your dragons. <br><br><hr>")
-            );
-            // Update area information
-            explore.currentEncounter["encounterFaced"] = true;
-            Game.ExploreData[Game.Explore.currentAreaID]["encounters"][Game.Explore.currentEncounter.encounterID]["encounterFaced"] = true;
-            // Reload encounter
-            $.each(explore.currentEncounter["enemies"], (i, enemy) => {
-                explore.currentEncounter["enemies"][i] = new Enemy(Game.Enemies[enemy.id], enemy.name);
-            })
-            // Reset variables
-            explore.encounterStarted = false;
-            explore.inEncounter = false;
-            // Update left-hand roster
-            $.each(Game.Roster.rosterDragons, (i, dragon) => {
-                Game.Roster.updateRosterSlot(i, dragon)
-            });
-            // Show Reset Button
-            $("#leave-encounter-button").attr("style", "display: block");
-        }
-
         function runEncounter(round) {
             // Allow player to watch the fight play out.
             setTimeout(function() {
@@ -641,17 +609,73 @@ Game.Explore = {
             encounterWon = checkIsEncounterWon()
             encounterLost = checkIsEncounterLost()
             if (encounterWon) {
-                winEncounter();
+                explore.winEncounter();
                 return false;
             } else {
-                loseEncounter()
+                explore.loseEncounter()
                 return false;
             }
         }, explore.roundTimer * (explore.maximumRounds+0.01));
     },
 
+    winEncounter() {
+        // Announce encounter outcome
+        $("#encounter-log").prepend($("<div>")
+            .attr("class", "notification-message encounter none")
+            .attr("style", "font-weight: bold;")
+            .html("You win!  <br><br><hr>")
+        );
+        // Distribute experience among dragons.
+        explore.distributeXP(explore.currentEncounter["enemies"]);
+        // Update area Information
+        Game.ExploreData[Game.Explore.currentAreaID]["encounters"][Game.Explore.currentEncounter.encounterID]["encounterFaced"] = true;
+        Game.ExploreData[Game.Explore.currentAreaID]["encounters"][Game.Explore.currentEncounter.encounterID]["encounterBeaten"] = true;
+        if (Game.ExploreData[Game.Explore.currentAreaID]["area"]["lastEncounter"] == Game.Explore.currentEncounter.encounterID) {
+            Game.ExploreData[Game.Explore.currentAreaID]["area"]["isBeaten"] = true;
+        }
+        // Update creature Information
+        $.each(explore.currentEncounter["enemies"], ( _ , enemy) => {
+            Game.Enemies[enemy.id].hasDefeated = true;
+        })
+        // Reset variables
+        explore.currentEncounter = undefined;
+        explore.encounterStarted = false;
+        explore.inEncounter = false;
+        // Update left-hand roster
+        $.each(Game.Roster.rosterDragons, (i, dragon) => {
+            Game.Roster.updateRosterSlot(i, dragon)
+        });
+        // Show Button to load next encounter in area.
+        $("#next-encounter-button").attr("style", "display: block");
+    },
+
+    loseEncounter() {    
+        $("#encounter-log").prepend($("<div>")
+            .attr("class", "notification-message encounter none")
+            .attr("style", "font-weight: bold;")
+            .html("The encounter proved too difficult for your dragons. <br><br><hr>")
+        );
+        // Update area information
+        explore.currentEncounter["encounterFaced"] = true;
+        Game.ExploreData[Game.Explore.currentAreaID]["encounters"][Game.Explore.currentEncounter.encounterID]["encounterFaced"] = true;
+        // Reload encounter
+        $.each(explore.currentEncounter["enemies"], (i, enemy) => {
+            explore.currentEncounter["enemies"][i] = new Enemy(Game.Enemies[enemy.id], enemy.name);
+        })
+        // Reset variables
+        explore.encounterStarted = false;
+        explore.inEncounter = false;
+        // Update left-hand roster
+        $.each(Game.Roster.rosterDragons, (i, dragon) => {
+            Game.Roster.updateRosterSlot(i, dragon)
+        });
+        // Show Reset Button
+        $("#leave-encounter-button").attr("style", "display: block");
+    },
+
     loadNextEncounter(areaID) {
         var areaInformation = Game.ExploreData[areaID]["area"]
+        // Load Next Encounter in area
         for (let i = 1; i <= areaInformation.lastEncounter; i++) {
             if (!Game.ExploreData[areaID]["encounters"][i]["encounterBeaten"]) {
                 explore.inEncounter = true;
@@ -663,6 +687,13 @@ Game.Explore = {
                 return false;
             }
         }
+        // If no valid encounter, return to explore 'Select Area' menu.
+        explore.inEncounter = false;
+        explore.currentAreaID = undefined;
+        explore.currentEncounter = undefined;
+        explore.activate();
+        $("#encounter-container").attr("style", "display: none");
+        $("#explore-area-select-container").attr("style", "display: block");
     },
 
     updateTeamOverview() {
