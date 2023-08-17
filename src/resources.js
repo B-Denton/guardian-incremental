@@ -34,7 +34,7 @@ Game.Resources = {
             if (resource.isVisible) {
                 resourceContainerID.append($("<div>")
                     .attr("class", "resource " + resource.type)
-                    .html(resource.resourceName + ": " + Decimal.floor(resource.amount) + " (" + Decimal(resource.income * Game.GAME_INTERVAL).toSD(2) + "/s)"))
+                    .html(resource.resourceName + ": " + Decimal.floor(resource.amount) + " / " + resource.maximum + " (" + Decimal(resource.income * Game.GAME_INTERVAL).toSD(2) + "/s)"))
             }
         });
   
@@ -69,7 +69,7 @@ Game.Resources = {
     generateIncome() {
         // generate tick income based on current income values.
         $.each(Game.Resources.PlayerResources, ( _ , resource) => {
-            resource.amount += resource.income;
+            resource.amount = Math.min( resource.amount + resource.income, resource.maximum);
         });
     }
 

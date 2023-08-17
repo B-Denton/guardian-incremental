@@ -12,6 +12,7 @@ Game.ResourceData = {
         element: "none",
         amount: 0,
         income: 0,
+        maximum: 100,
         generation: [],
         isVisible: false
     },
@@ -25,6 +26,7 @@ Game.ResourceData = {
         element: "none",
         amount: 0,
         income: 0,
+        maximum: 0,
         generation: [
             {"resource": "twigs", "baseGeneration": 0.01}
         ],
@@ -40,6 +42,7 @@ Game.ResourceData = {
         element: "none",
         amount: 0,
         income: 0,
+        maximum: 100,
         generation: [],
         isVisible: false
     },
@@ -51,6 +54,7 @@ Game.ResourceData = {
         element: "none",
         amount: 0,
         income: 0,
+        maximum: 100,
         generation: [],
         isVisible: false
     },
@@ -64,6 +68,7 @@ Game.ResourceData = {
         element: "ruby",
         amount: 0,
         income: 0,
+        maximum: 10,
         generation: [],
         isVisible: false
     },
@@ -75,6 +80,7 @@ Game.ResourceData = {
         element: "cloud",
         amount: 0,
         income: 0,
+        maximum: 10,
         generation: [],
         isVisible: false
     }

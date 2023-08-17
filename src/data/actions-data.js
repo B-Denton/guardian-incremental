@@ -94,6 +94,7 @@ Game.ActionsData = {
         action: function() {
             log.addNotification("You build a new warren for a Jackalope pair.", "none")
             playerResources["jackalope"].amount += 2;
+            playerResources["jackalope"].maximum += 10;
         }
     },
 
@@ -117,7 +118,7 @@ Game.ActionsData = {
         },
         action: function() {
             log.addNotification("Jackalope will now produce offspring!", "none")
-            Game.Resources.PlayerResources['jackalope'].generation.push({"resource": "jackalope", "baseGeneration": 0.00001}) 
+            Game.Resources.PlayerResources['jackalope'].generation.push({"resource": "jackalope", "baseGeneration": 0.0001}) 
             Game.ActionsList["jackalopeMatingRituals"].isVisible = false;
             Game.Field.activate();
         }
