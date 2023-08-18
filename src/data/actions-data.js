@@ -102,30 +102,6 @@ Game.ActionsData = {
 
     //// UPGRADE CREATURES
 
-    "jackalopeMatingRituals": {
-        actionID: "jackalopeMatingRituals",
-        actionName: "Jackalope Mating Rituals",
-        actionDescription: "Encourage the jackalope to... make more jackalope.",
-        type: "upgrade",
-        repeatable: false,
-        isVisible: false,
-        count: 0,
-        cost: [
-            { resource: "fire", growthRate: 1.5, baseCost: 20 },
-        ],
-        produce: { 
-            "jackalopeProductionUpgrade": "Jackalope Production" 
-        },
-        action: function() {
-            log.addNotification("Jackalope will now produce offspring!", "none")
-            Game.Resources.PlayerResources['jackalope'].generation.push({"resource": "jackalope", "baseGeneration": 0.0001}) 
-            Game.ActionsList["jackalopeMatingRituals"].isVisible = false;
-            Game.Field.activate();
-        }
-    },
-
-    //// UPGRADE HATCHERY
-
     "jackalopeCourtingRituals": {
         actionID: "jackalopeCourtingRituals",
         actionName: "Jackalope Courting Rituals",
@@ -145,6 +121,31 @@ Game.ActionsData = {
             Game.Resources.PlayerResources['jackalope'].generation.push({"resource": "jackalope", "baseGeneration": 0.00001}) 
             Game.ActionsList["jackalopeCourtingRituals"].isVisible = false;
             Game.Field.activate();
+        }
+    },
+
+    //// UPGRADE HATCHERY
+
+    "eggWarmingEfficiency": {
+        actionID: "eggWarmingEfficiency",
+        actionName: "Improved Egg Warming",
+        actionDescription: "Use Dragon fire to better warm the hatchery nests!",
+        type: "upgrade",
+        repeatable: true,
+        isVisible: false,
+        count: 0,
+        cost: [
+            { resource: "fire", growthRate: 1.5, baseCost: 30 },
+        ],
+        produce: { 
+            "eggWarming": "Egg Warming Efficiency" 
+        },
+        action: function() {
+            log.addNotification("The warming fires inside the hatchery glow brighter.", "none")
+            Game.HatcherySlotData.temperatureIncrementOnClick += 2;
+            $.each(Game.Hatchery.HatcherySlots, ( _ , slot) => {
+                slot.temperatureIncrementOnClick += 2;
+            })      
         }
     },
 

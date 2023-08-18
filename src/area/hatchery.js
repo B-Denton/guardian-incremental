@@ -1,11 +1,17 @@
 "use strict"; // execute in strict mode
 
+Game.HatcherySlotData = {
+    currentTemperature: 0,
+    temperatureIncrementOnClick: 2,
+    temperatureDrain: -0.1
+}
+
 class HatcherySlot {
     // Slot for hatching eggs in the hatchery.
     constructor() {
-        this.currentTemperature = 0;
-        this.temperatureIncrementOnClick = 2;
-        this.temperatureDrain = -0.1;
+        this.currentTemperature = Game.HatcherySlotData.currentTemperature;
+        this.temperatureIncrementOnClick = Game.HatcherySlotData.temperatureIncrementOnClick;
+        this.temperatureDrain = Game.HatcherySlotData.temperatureDrain;
     };
 };
 

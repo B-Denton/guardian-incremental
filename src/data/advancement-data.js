@@ -24,7 +24,9 @@ Game.AdvancementData = {
             A nearby cave looks like the perfect place to start a hatchery.", "progress")
             // Build Nest Action unlocks.
             Game.ActionsList["buildNest"].isVisible = true;
-            field.activate();
+            if (Game.AreaHandler.currentArea == "field") {
+                field.activate();
+            }   
         }
     },
 
@@ -56,7 +58,7 @@ Game.AdvancementData = {
     "jackalopeUnlock": {  
         hasTriggered: false, 
         shouldTrigger: () =>  { 
-            return ( reserve.reserveDragons.some(item => item != undefined) );
+            return ( playerResources["fire"].amount >= 10  );
         },
         activate: () => {  
             Game.ActionsList["buildJackalopeWarren"].isVisible = true;
@@ -101,7 +103,22 @@ Game.AdvancementData = {
         },
         activate: () => {  
             Game.ActionsList["jackalopeCourtingRituals"].isVisible = true;
-            field.activate();
+            if (Game.AreaHandler.currentArea == "field") {
+                field.activate();
+            }   
+        }
+    },
+
+    "EggWarmingUpgradeUnlock": {  
+        hasTriggered: false, 
+        shouldTrigger: () =>  { 
+            return (playerResources["fire"].amount >= 5 );
+        },
+        activate: () => {  
+            Game.ActionsList["eggWarmingEfficiency"].isVisible = true;
+            if (Game.AreaHandler.currentArea == "field") {
+                field.activate();
+            }   
         }
     },
 
