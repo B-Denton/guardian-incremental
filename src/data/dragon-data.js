@@ -58,8 +58,7 @@ class Dragon {
         this.xp = 0;
         this.level++;
         $.each(['hp', 'attack', 'defense', 'speed'], ( _ , item) => {
-            console.log (Math.round(((this[item].max * 1.1) * 100) / 100))
-            this[item].max = Math.round(((this[item].max * 1.1) * 100) / 100) ;
+            this[item].max = Math.ceil(((this[item].max * 1.1) * 100) / 100) ;
             this[item].value = this[item].max;
         })
     };
