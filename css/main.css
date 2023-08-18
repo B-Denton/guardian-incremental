@@ -82,9 +82,8 @@ button:active {
   background-color: var(--pale);
 }
 
-
-button:hover:enabled {
-  filter: brightness(110%)
+button:hover {
+  background-color: var(--pale);
 }
 
 button:disabled {
@@ -468,6 +467,10 @@ div {
 .action.button.unaffordable {
   background: var(--main-color-1);
   color: var(--main-color-3);
+}
+
+.action.button.unaffordable:hover {
+  background: var(--main-color-1);
 }
 
 .build-count {
