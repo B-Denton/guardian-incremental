@@ -25,6 +25,8 @@ Game.Explore = {
 
         if (testing) {
             explore.isUnlocked = true;
+            //Game.ExploreData["forest"]["area"].isBeaten = true;
+        
         }
         
     },
@@ -372,7 +374,7 @@ Game.Explore = {
         var strategyOptions = [];
         if (explore.currentEncounter["standardStrategyAvailable"]) {
             $.each(Game.Strategies, ( _ , strategy) => {
-                if (strategy.isAvailable()) {
+                if (strategy.isAvailable(roster.rosterDragons)) {
                     strategyOptions.push(strategy);
                 };
             });

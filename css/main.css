@@ -218,6 +218,7 @@ p {
   font-size: var(--font-size-large);
   text-align: center;
   line-height: 2;
+  
 }
 
 .close-modal {
@@ -523,6 +524,7 @@ div {
 /* HATCHERY */
 
 #hatchery-grid {
+  margin: 20px 0px;
   display: grid;
   grid-template-columns: repeat(auto-fit, 250px);
 }

@@ -64,7 +64,7 @@ Game.Strategies = {
         "id": "ambush",
         "name": "Ambush",
         "description": "Rush in to get the first hit!",
-        "effectDescription": "↑ Speed &nbsp;&nbsp; | &nbsp;&nbsp; ↓ Defense",
+        "effectDescription": "<hr> ↑↑ &nbsp;&nbsp; Speed <hr> ↓↓ &nbsp;&nbsp; Defense <hr>",
         "effect": {
             "attack": 0.9,
             "defense": 1,
@@ -80,7 +80,7 @@ Game.Strategies = {
         "id": "brawl",
         "name": "Brawl",
         "description": "An all out attack that throws caution to the wind!",
-        "effectDescription": "↑ Attack &nbsp;&nbsp; | &nbsp;&nbsp; ↓ Defense",
+        "effectDescription": "<hr> ↑↑ &nbsp;&nbsp; Attack <hr> ↓↓ &nbsp;&nbsp; Defense <hr>",
         "effect": {
             "attack": 1.1,
             "defense": 0.9,
@@ -96,7 +96,7 @@ Game.Strategies = {
         "id": "guarded",
         "name": "Guarded",
         "description": "A careful approach that shows no weakness.",
-        "effectDescription": "↑ Defense &nbsp;&nbsp; | &nbsp;&nbsp; ↓ Speed",
+        "effectDescription": "<hr> ↑↑ &nbsp;&nbsp; Defense <hr>  ↓↓ &nbsp;&nbsp; Speed <hr>",
         "effect": {
             "attack": 1,
             "defense": 1.1,
@@ -105,6 +105,23 @@ Game.Strategies = {
         },
         isAvailable: (roster) => {
             return true
+        }
+    },
+
+    "tempest": {
+        "id": "tempest",
+        "name": "Tempest",
+        "description": "Summon a storm to whisk us into battle.",
+        "effectDescription": "<hr> ↑ &nbsp;&nbsp; Attack <hr> ↑ &nbsp;&nbsp; Speed <hr> ↓↓ &nbsp;&nbsp; Defense <hr>",
+        "effect": {
+            "attack": 1.05,
+            "defense": 0.9,
+            "speed": 1.05,
+            "other": undefined
+        },
+        isAvailable: (roster) => {
+                function isCloud(dragon) { return dragon != undefined && dragon.element == "cloud"}
+                return ( roster.some(isCloud) )
         }
     }
 

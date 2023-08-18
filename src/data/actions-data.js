@@ -172,7 +172,7 @@ Game.ActionsData = {
     "eggWarmingEfficiency": {
         actionID: "eggWarmingEfficiency",
         actionName: "Improved Egg Warming",
-        actionDescription: "Use Dragon fire to better warm the hatchery nests!",
+        actionDescription: "Use dragons' fire to better warm the hatchery nests!",
         type: "upgrade",
         repeatable: true,
         isVisible: false,
