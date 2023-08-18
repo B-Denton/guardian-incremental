@@ -3,6 +3,7 @@
 
   --pale: #f1eef5;
   --dark: #43414b;
+  --dark-transparent: #43414bDD;
 
   --main-color-1: #dedce4;
   --main-color-2: #c0becf;
@@ -190,6 +191,42 @@ p {
 
 #right-column {
   grid-template-rows: 4fr 1fr;
+}
+
+/* MODAL */
+
+.modal {
+  display: none; 
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 85%; 
+  max-height: 80%; 
+  overflow: auto; 
+  background-color: var(--dark);
+  background-color: var(--dark-transparent);
+  border: var(--dark) 2px solid;
+  box-shadow: 0px 0px 20px var(--dark);
+}
+
+.modal-text {
+  margin: 5% 10%;
+  padding: 30px 0px 50px 0px;
+  background-color: var(--dark);
+  color: var(--pale);
+  font-size: var(--font-size-large);
+  text-align: center;
+  line-height: 2;
+}
+
+.close-modal {
+  float: right;
+  padding: 0px 10px;
+  color: var(--pale);
+  font-size: 50px;
+  font-weight: bold;
+  cursor: pointer;
 }
 
 /* LEFT COLUMN CONTENT */

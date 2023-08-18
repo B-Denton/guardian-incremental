@@ -5,7 +5,7 @@ window.Game = window.Game || {};
 $.extend(Game, {
     GAME_NAME: "The Dragons' Guardian",
     // Version information
-    CURRENT_VERSION: "0.1.04",
+    CURRENT_VERSION: "0.1.05",
     ORIGINAL_VERSION: "0.1",
     VERSION_NAME: "Bugs and Bears",
     // Number handling
@@ -63,6 +63,8 @@ Game.Main = {
             } catch (err) {
                 log.addError(err);
             }
+        } else {
+            $("#game-start-modal").attr("style", "display: block;")     
         }
     },
 
