@@ -17,6 +17,18 @@ Game.ResourceData = {
         isVisible: false
     },
 
+    "logs": {
+        resourceID: "logs",
+        resourceName: "Logs",
+        type: "player",
+        element: "none",
+        amount: 0,
+        income: 0,
+        maximum: 100,
+        generation: [],
+        isVisible: false
+    },
+
     // CREATURES
 
     "jackalope": {
@@ -29,6 +41,20 @@ Game.ResourceData = {
         maximum: 0,
         generation: [
             {"resource": "twigs", "baseGeneration": 0.01}
+        ],
+        isVisible: false
+    },
+
+    "bugbear": {
+        resourceID: "bugbear",
+        resourceName: "Bugbear",
+        type: "creature",
+        element: "none",
+        amount: 0,
+        income: 0,
+        maximum: 0,
+        generation: [
+            {"resource": "logs", "baseGeneration": 0.01}
         ],
         isVisible: false
     },

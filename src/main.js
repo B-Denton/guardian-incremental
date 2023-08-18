@@ -5,9 +5,9 @@ window.Game = window.Game || {};
 $.extend(Game, {
     GAME_NAME: "The Dragons' Guardian",
     // Version information
-    CURRENT_VERSION: "0.1.03",
+    CURRENT_VERSION: "0.1.04",
     ORIGINAL_VERSION: "0.1",
-    VERSION_NAME: "Cloud Dragons Arrive",
+    VERSION_NAME: "Bugs and Bears",
     // Number handling
     EPSILON: 1e-6,  // accuracy for floating-point equality comparisons
     MAX_SAFE_NUMBER: Math.pow(2, 36) - 1,  // for 5 decimal place precision

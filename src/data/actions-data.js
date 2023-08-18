@@ -5,10 +5,10 @@ Game.ActionsData = {
 
     // PLAYER
 
-    "search": {
-        actionID: "search",
-        actionName: "Search",
-        actionDescription: "Search the debris",
+    "searchField": {
+        actionID: "searchField",
+        actionName: "Search (Field)",
+        actionDescription: "Search the debris around the field.",
         type: "player",
         repeatable: true,
         isVisible: true,
@@ -20,8 +20,29 @@ Game.ActionsData = {
         },
         action: function() {
             resources.PlayerResources["twigs"].amount += 1;
-            if (this.count > 0 && this.count % 10 == 0) {
+            if (this.count > 0 && this.count % 10 == 0 && playerResources["eggRuby"].amount < 1) {
                 playerResources["eggRuby"].amount += 1;
+            }
+        },
+    },
+
+    "searchForest": {
+        actionID: "searchForest",
+        actionName: "Search (Forest)",
+        actionDescription: "Search the debris around the forest.",
+        type: "player",
+        repeatable: true,
+        isVisible: false,
+        count: 0, 
+        cost: [],
+        produce: { // key: ID string, value: display string
+            "logs": "Logs",
+            "eggCloud": "Cloud Egg" 
+        },
+        action: function() {
+            resources.PlayerResources["logs"].amount += 1;
+            if (this.count > 0 && this.count % 10 == 0 && playerResources["eggCloud"].amount < 1) {
+                playerResources["eggCloud"].amount += 1;
             }
         },
     },
@@ -95,6 +116,28 @@ Game.ActionsData = {
             log.addNotification("You build a new warren for a Jackalope pair.", "none")
             playerResources["jackalope"].amount += 2;
             playerResources["jackalope"].maximum += 10;
+        }
+    },
+
+    "buildBugbearDen": {
+        actionID: "buildBugbearDen",
+        actionName: "Bugbear Den",
+        actionDescription: "Build a sturdy den for bugbears",
+        type: "build",
+        repeatable: true,
+        isVisible: false,
+        count: 0,
+        cost: [
+            { resource: "twigs", growthRate: 1.5, baseCost: 20 },
+            { resource: "logs", growthRate: 1.5, baseCost: 10 }
+        ],
+        produce: { 
+            "bugbear": "Bugbears" 
+        },
+        action: function() {
+            log.addNotification("You build a new den for a bugbear and their friend.", "none")
+            playerResources["bugbear"].amount += 2;
+            playerResources["bugbear"].maximum += 10;
         }
     },
 

@@ -16,8 +16,8 @@ Game.AdvancementData = {
         },
         activate: () => {  // to run when advancement triggered. 
             // Player discovers that they can generate ruby eggs from searching debris.
-            Game.ActionsList["search"].produce["eggRuby"] = ["Ruby Eggs"];
-            Game.ActionHandler.updateTooltipProduce(Game.ActionsList["search"]);
+            Game.ActionsList["searchField"].produce["eggRuby"] = ["Ruby Eggs"];
+            Game.ActionHandler.updateTooltipProduce(Game.ActionsList["searchField"]);
             // Hatchery area becomes available
             Game.AreaHandler.unlockArea("hatchery")
             log.addNotification("You find a dragon's egg hidden beneath a toppled tree, but it's icy-cold to the touch. \
@@ -64,6 +64,24 @@ Game.AdvancementData = {
             Game.ActionsList["buildJackalopeWarren"].isVisible = true;
             log.addNotification("With a dragon guarding the area, some jackalope begin to emerge from hiding. \
             Their homes must have been destroyed in the recent explosions.", "progress");
+            if (Game.AreaHandler.currentArea == "field") {
+                field.activate();
+            }   
+        }
+    },
+
+    "bugbearUnlock": {  
+        hasTriggered: false, 
+        shouldTrigger: () =>  { 
+            return ( playerResources["logs"].amount >= 5  );
+        },
+        activate: () => {  
+            Game.ActionsList["buildBugbearDen"].isVisible = true;
+            log.addNotification("Although the forest is clear of danger, it's still in disarray. \
+            You notice some bugbear wandering around sadly, looking for their old homes.", "progress");
+            if (Game.AreaHandler.currentArea == "field") {
+                field.activate();
+            }   
         }
     },
 
@@ -82,6 +100,19 @@ Game.AdvancementData = {
     // ACTION UNLOCKS
 
     //// PLAYER ACTION UNLOCKS
+
+    // SEARCHING 
+    "searchForestUnlock": {  
+        hasTriggered: false, 
+        shouldTrigger: () =>  { 
+            return (Game.ExploreData["forest"]["area"].isBeaten);
+        },
+        activate: () => {  
+            Game.ActionsList["searchForest"].isVisible = true;
+        }
+    },
+
+    // OTHER
 
     "teamTrainingUnlock": {  
         hasTriggered: false, 

@@ -74,8 +74,6 @@ Game.ActionHandler = {
                     setTimeout(function(){
                         btn.prop('disabled', false);
                     }, 500);
-                } else {
-                    log.addNotification("You can't afford this.", "warning");
                 }
             });
 
