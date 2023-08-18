@@ -25,7 +25,7 @@ Game.ActionHandler = {
         // Reset content
         container.empty();       
         // Create container to hold each action type
-        $.each(Game.ActionTypes, (i, type) => {
+        $.each(Game.ActionTypes, ( _ , type) => {
             container.append($("<div>")
                 .attr("class", "action-type-container")
                 .attr("id", type + "-container")
@@ -88,6 +88,14 @@ Game.ActionHandler = {
         return actionButton
     },
 
+    createBuildCount(actionButton, action) {
+        const buildCount = $("<div>")
+            .attr("class", "build-count")
+            .attr("id", "build-count-" + action.actionID)
+            .html("<p>" + action.count + "</p>");
+        actionButton.append(buildCount);
+    },
+
     isAffordable(action) {
         var isAffordable = true;
         $.each(action.cost, ( _ , cost) => {
@@ -96,6 +104,18 @@ Game.ActionHandler = {
             }
         });
         return isAffordable;
+    },
+
+    updateUnaffordableButtons() {
+        $.each(Game.ActionsList, ( _ , action) => {
+            var buttonID = $("#action-button-" + action.actionID);
+            if (!this.isAffordable(action)) {
+                buttonID.addClass('unaffordable');
+            } else {
+                buttonID.removeClass('unaffordable');
+            }
+
+        });
     },
 
     updateTooltipCosts(action) {
@@ -108,14 +128,6 @@ Game.ActionHandler = {
         $.each(action.produce, (produceID, produceDisplay) => {
             $("#action-tooltip-cost-" + action.actionID + "-" + produceID).html("+ " + produceDisplay);
         });
-    },
-
-    createBuildCount(actionButton, action) {
-        const buildCount = $("<div>")
-            .attr("class", "build-count")
-            .attr("id", "build-count-" + action.actionID)
-            .html("<p>" + action.count + "</p>");
-        actionButton.append(buildCount);
     },
 
     updateBuildCount(action) {

@@ -31,7 +31,7 @@ Game.Field = {
     },
 
     update() {
-
+        Game.ActionHandler.updateUnaffordableButtons()
     },
 
     

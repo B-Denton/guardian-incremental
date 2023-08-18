@@ -465,6 +465,11 @@ div {
   z-index: 0px;
 }
 
+.action.button.unaffordable {
+  background: var(--main-color-1);
+  color: var(--main-color-3);
+}
+
 .build-count {
   position: absolute;
   border-left: 1px var(--dark) solid;
