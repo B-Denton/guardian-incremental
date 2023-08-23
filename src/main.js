@@ -5,7 +5,7 @@ window.Game = window.Game || {};
 $.extend(Game, {
     GAME_NAME: "The Dragons' Guardian",
     // Version information
-    CURRENT_VERSION: "0.2.05",
+    CURRENT_VERSION: "0.2.01",
     ORIGINAL_VERSION: "0.1",
     VERSION_NAME: "Locals Saved",
     // Number handling
