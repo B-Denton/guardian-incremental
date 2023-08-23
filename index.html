@@ -22,11 +22,20 @@
         <script type="text/javascript" src="src/lib/pako.min.js"></script>
         <!-- Decimal: provides arbitrary-precision Decimal type for Javascript -->
         <script type="text/javascript" src="src/lib/decimal.min.js"></script>
-
-        <!-- Main files -->
         
         <script type="text/javascript" src="src/main.js"></script>
 
+        <!-- Data files -->
+        <script type="text/javascript" src="src/data/area-data.js"></script>
+        <script type="text/javascript" src="src/data/actions-data.js"></script>
+        <script type="text/javascript" src="src/data/advancement-data.js"></script>
+        <script type="text/javascript" src="src/data/dragon-data.js"></script>
+        <script type="text/javascript" src="src/data/element-data.js"></script>
+        <script type="text/javascript" src="src/data/egg-data.js"></script>
+        <script type="text/javascript" src="src/data/explore-data.js"></script>
+        <script type="text/javascript" src="src/data/resource-data.js"></script>
+        
+        <!-- Game files -->
         <script type="text/javascript" src="src/actions.js"></script>
         <script type="text/javascript" src="src/advancements.js"></script>
         <script type="text/javascript" src="src/area-handler.js"></script>
@@ -36,25 +45,18 @@
         <script type="text/javascript" src="src/save.js"></script>
         <script type="text/javascript" src="src/settings.js"></script>
         <script type="text/javascript" src="src/tooltip.js"></script>
-        
+
         <!-- Area files-->
         <script type="text/javascript" src="src/area/explore.js"></script>
         <script type="text/javascript" src="src/area/field.js"></script>
         <script type="text/javascript" src="src/area/hatchery.js"></script>
         <script type="text/javascript" src="src/area/reserve.js"></script>
 
-        <!-- Data files -->
-        <script type="text/javascript" src="src/data/actions-data.js"></script>
-        <script type="text/javascript" src="src/data/advancement-data.js"></script>
-        <script type="text/javascript" src="src/data/dragon-data.js"></script>
-        <script type="text/javascript" src="src/data/element-data.js"></script>
-        <script type="text/javascript" src="src/data/egg-data.js"></script>
-        <script type="text/javascript" src="src/data/explore-data.js"></script>
-        <script type="text/javascript" src="src/data/resource-data.js"></script>
-        
+
         <!-- Simplified Reference Variables -->
         <script>
             var main = Game.Main;
+            var areas = Game.AreaHandler;
             // UI
             var log = Game.Log;
             var roster = Game.Roster;
@@ -80,8 +82,13 @@
 
                 <!-- Top -->
                 <div class="header" id="header-bar">
-                    <h2 id="game-name"></h1>
-                    <h4 id="game-version"></h3>
+                    <div id="left-header-bar">
+                        <h2 id="game-name"></h1>
+                        <h4 id="game-version"></h3>         
+                    </div>
+                    <div id="right-header-bar">
+                        <div id="delete-save" onclick="Game.Save.deleteSave()">Delete Local Save</div>
+                    </div>
                 </div>
 
                 <!-- Center-->
@@ -106,7 +113,9 @@
                 </div>
 
                 <!-- Bottom -->
-                <div class="footer" id="footer-bar"></div>
+                <div class="footer" id="footer-bar">
+                    <div id="last-autosave"></div>
+                </div>
 
             </div>
         </div>

@@ -40,6 +40,14 @@ Game.Resources = {
   
     },
 
+    loadDataFromSave(resources) {
+        $.each(resources, (resourceID, resourceData) => {
+            for (var key in resourceData) {
+                Game.Resources.PlayerResources[resourceID][key] = resourceData[key];
+            };
+        });
+    },
+
     calculateIncome() {
         // Reset income.
         $.each(playerResources, ( _ , resource) => {
@@ -72,9 +80,5 @@ Game.Resources = {
             resource.amount = Math.min( resource.amount + resource.income, resource.maximum);
         });
     }
-
-
-
-
-    
+ 
 }

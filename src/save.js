@@ -6,34 +6,74 @@ Game.Save = {
 
     saveGame() {
         var saveData = {
+            // Game version
             version: Game.CURRENT_VERSION,
-            activeArea: "",  // Area that player is viewing at time of save [areaID]
+            // UI
+            log: {},
+            // Areas
+            currentArea: "",  // Area that player is viewing at time of save [areaID]
+            areas: {},  // key: areaID, value: object containing area information
+            // Player Data
+            actions: {},
+            advancements: {},
             resources: {},
-            areaUnlocked: {}  // key: areaID, value: object containing area information
+            roster: []
         }
 
-        // Save the player's current resource amounts.
+        // Areas Data
+        saveData.currentArea = Game.AreaHandler.currentArea;
+        $.each(Game.AreaHandler.areas, (areaID , area) => {
+            saveData.areas[areaID] = area;
+        });
 
-        $.each(Game.PlayerResources, (resourceID, resource) => {
-            saveData.resources[resourceID] = {
-                // Store information about the resource amounts here, e.g.
-                amount: resource.amount
+        // Actions Data
+        $.each(Game.ActionsList, (actionID, action) => {
+            saveData.actions[actionID] = {
+                // Store variable information about actions  
+                isVisible: action.isVisible,
+                count: action.count,
+                cost: action.cost, 
             }
         });
 
-        // Save the player's unlocked areas.
-        saveData.activeArea = Game.AreaHandler.currentArea;
-        $.each(Game.UnlockedAreas, (areaID, area) => {
-            saveData.areaUnlocked[areaID] = area
+        // Advancements Data
+        $.each(Game.Advancements.AdvancementsList, (advancementID, advancement) => {
+            saveData.advancements[advancementID] = {
+                // Store variable information about actions  
+                hasTriggered: advancement.hasTriggered
+            }
         });
+
+        // Resources Data
+        $.each(Game.Resources.PlayerResources, (resourceID, resource) => {
+            saveData.resources[resourceID] = {
+                amount: resource.amount,
+                maximum: resource.maximum,
+                generation: resource.generation,
+                isVisible: resource.isVisible
+            }
+        });
+
+        // Roster Data
+        saveData.roster = {
+            numberOfSlots: Game.Roster.numberOfSlots,
+            dragons: Game.Roster.rosterDragons
+        }
+
+        // Log Data
+        saveData.log = {
+            notificationList: Game.Log.notificationList,
+            totalNotifications: Game.Log.totalNotifications
+        }
 
         // Convert save object to string for localStorage compatability
         //// TO ADD: Data compression.
-        encodedSaveData = JSON.stringify(saveData);
+        var encodedSaveData = JSON.stringify(saveData);
 
         // Save to localStorage
         //// TO ADD: Checks for browser compatability.
-        localStorage.setItem(saveFileName, encodedSaveData);
+        localStorage.setItem(this.saveFileName, encodedSaveData);
+
     },
 
     decodeSave(encodedSaveData) {
@@ -45,7 +85,10 @@ Game.Save = {
         }
     },
 
-    loadGame(encodedSaveData) {
+    loadGame(importedSaveData) {
+
+        const encodedSaveData = importedSaveData || localStorage.getItem(Game.Save.saveFileName);
+        
         // Check valid JSON string has been given.
         if (!encodedSaveData) {
             throw new Error("Unable to load game. No previous game data found.");
@@ -54,24 +97,44 @@ Game.Save = {
         }
 
         // Decode JSON string.
-        saveData = this.decodeSave(encodedSaveData)
+        var saveData = this.decodeSave(encodedSaveData)
 
         // If decoding successful, load data.
         if (saveData) {
-            //// Areas
-            Game.AreaHandler.currentArea = activeArea;
-            $.each(saveData.areaUnlocked, (areaID, area) => {
-                Game.AreaHandler.allAreas[areaID] = area
+
+            // Areas
+            Game.AreaHandler.currentArea = saveData.currentArea;
+            $.each(saveData.areas, (areaID, areaInformation) => {
+                Game.AreaHandler.loadDataFromSave(areaID, areaInformation);
             });
 
-            //// Resources
-            $.each(saveData.resources, function(resourceID, resource) {
-                // Confirm resource type is still used in current version before loading.
-                if (Game.PlayerResources.has(resourceID)) {  
-                    Game.PlayerResources.get(resourceID).amount = isNaN(resource.amount) ? 0 : resource.amount;
-                }
-            });
+            // Actions
+            Game.ActionHandler.loadDataFromSave(saveData.actions);
+
+            // Advancements
+            Game.Advancements.loadDataFromSave(saveData.advancements);
+
+            // Resources
+            Game.Resources.loadDataFromSave(saveData.resources);
+        
+            // Dragons
+            //// Roster
+            Game.Roster.loadDragonsFromSave(saveData.roster);
+            //// Reserve
+            Game.Reserve.loadDragonsFromSave(saveData.areas.reserve.reserveDragons);
+
+            // Hatchery
+            //// Slots
+            Game.Hatchery.loadSlotDataFromSave(saveData.areas.hatchery.hatcherySlots);
+            //// Eggs
+            Game.Hatchery.loadEggDataFromSave(saveData.areas.hatchery.hatcheryEggs);
+
+            // Notifications
+            Game.Log.loadDataFromSave(saveData.log)
+
+
         }
+
     },
 
     importData(encodedSaveData) {
@@ -86,11 +149,12 @@ Game.Save = {
     },
 
     savedGameExists() {
-        return localStorage.getItem(self.saveFileName) !== null;
+        return localStorage.getItem(Game.Save.saveFileName) !== null;
     },
 
     deleteSave() {
-        localStorage.removeItem(self.saveFileName);
+        localStorage.removeItem(Game.Save.saveFileName);
+        console.log("Save Deleted.")
     },
 
 }

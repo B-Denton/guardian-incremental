@@ -16,9 +16,17 @@ Game.Log = {
 
     },
 
+    loadDataFromSave(logData) {
+        Game.Log.totalNotifications = logData.totalNotifications;
+        $.each(logData.notificationList, ( _ , notification) => {
+            this.addNotification(notification[0], notification[1]);
+        });
+    },
+
     addNotification(message, important) {
         log.notificationList.push([message, important]);
         log.updateLog();
+        log.totalNotifications++;
     },
 
     updateLog() {
@@ -32,12 +40,14 @@ Game.Log = {
             .attr("id", "notifications-container")
         );
 
-        $.each(log.notificationList, (i, notification) => {
+        $.each(log.notificationList, ( _ , notification) => {
             $("#notifications-container").prepend($("<div>")
                 .attr("class", "notification-message " + notification[1])
                 .html(notification[0])
             );
         });
+
+        
     }
 
 

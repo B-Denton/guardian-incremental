@@ -12,15 +12,23 @@ Game.ActionsList = {
 Game.ActionHandler = {
 
     init() {
-
-    },
-
-    setup() {
         $.each(Game.ActionsData, (actionID, action) => {
             Game.ActionsList[actionID] = action;
         });
     },
+
+    setup() {
+
+    },
     
+    loadDataFromSave(actionData) {
+        $.each(actionData, (actionID, actionData) => {
+            for (var key in actionData) {
+                    Game.ActionsList[actionID][key] = actionData[key];
+            };
+        });
+    },
+
     setupActions(container) {
         // Reset content
         container.empty();       

@@ -3,21 +3,29 @@
 Game.Advancements = { 
 
     init() {
-
-    },
-
-    setup() {
         $.each(Game.AdvancementData, (advancementID, advancement) => {
-            this.advancementsList[advancementID] = advancement;
+            this.AdvancementsList[advancementID] = advancement;
         });
     },
 
-    advancementsList: {
+    setup() {
 
+    },
+
+    AdvancementsList: {
+
+    },
+
+    loadDataFromSave(advancementData) {
+        $.each(advancementData, (advancementID, advancementData) => {
+            for (var key in advancementData) {
+                    Game.Advancements.AdvancementsList[advancementID][key] = advancementData[key];
+            };
+        });
     },
     
     checkAdvancements() {
-        $.each(this.advancementsList, (advancementID, advancement) => {
+        $.each(this.AdvancementsList, (advancementID, advancement) => {
             if (!advancement.hasTriggered) {
                 if (advancement.shouldTrigger()) {
                     advancement.activate();

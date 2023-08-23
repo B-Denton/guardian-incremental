@@ -1,32 +1,22 @@
 "use strict"; // execute in strict mode
 
 Game.Explore = {
-    // Required area variables
-    id: "explore",
-    name: "Explore",
-    description: "It's time to venture further into the island.",
-    isUnlocked: false,
-    // Area-specific variables
-    maximumEnemies: 6,
-    maximumRounds: 10,
-    roundTimer: 200,
-    inEncounter: false,
-    currentAreaID: undefined,
-    currentEncounter: undefined,
-    encounterStarted: false,
-    currentStrategy: undefined,
-    
 
     init() {
+        // Load Default Data
+        const data = Game.AreaData["explore"];
+        for (var key in data) {
+            this[key] = data[key]
+        };
+
         Game.AreaHandler.addArea(this);
     },
 
-    setup() {  // load area variables from saved data
+    setup() { 
 
         if (testing) {
             explore.isUnlocked = true;
-            //Game.ExploreData["forest"]["area"].isBeaten = true;
-        
+            Game.ExploreData["forest"]["area"].isBeaten = true;
         }
         
     },

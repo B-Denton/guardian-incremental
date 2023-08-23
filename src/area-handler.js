@@ -3,35 +3,26 @@
 Game.AreaHandler = {
 
     currentArea: "field" ,  // Area that player is currently viewing.
-    allAreas: {},  // Holds information on all game areas. key: areaID, value: dict.
+    areas: {},  // Holds information on all game areas. key: areaID, value: dict.
 
     init() {
         this.currentArea = "field" 
     },
 
     addArea(area) {
-        this.allAreas[area.id] = {
-            id: area.id,  // shortened string value
-            name: area.name,  // string value
-            object: area  // area object
-        }
+        this.areas[area.id] = area;
     },
 
     isAreaUnlocked(areaID) {
-        return this.allAreas[areaID].object.isUnlocked;
+        return this.areas[areaID].isUnlocked;
     },
 
-    updateUnlockedAreas() {
-        $.each(this.allAreas, (areaID, areaInformation) => {
-            if (areaInformation.object.isUnlocked) {
-                return;  // equivalent to 'continue'. 
-            }
-            
-            /*  TO ADD: Code to check if unlock requirements 
-                are met for any new areas.
-            */
-
-        });
+    loadDataFromSave(areaID, areaInformation) {
+        for (var key in areaInformation) {
+            if (!(["reserveDragons", "hatcheryEggs", "hatcherySlots"].includes(key))) {
+                Game.AreaHandler.areas[areaID][key] = areaInformation[key];
+            }  
+        };
     },
 
     loadCurrentArea() {
@@ -44,23 +35,22 @@ Game.AreaHandler = {
         this.setupAreaNavigationBar();
 
         // Load area content
-        this.allAreas[this.currentArea].object.activate();
+        this.areas[this.currentArea].activate();
     },
 
     setupAreaNavigationBar () {
         // Reset list of navigatable areas.
         $("#areaList").empty();
         // Add unlocked areas to list in desired order.
-        const areas = ['field', 'hatchery', 'reserve', 'explore']
-        $.each(areas, ( _ , areaID) => {
-            var areaInformation = this.allAreas[areaID]
-            if (areaInformation.object.isUnlocked) {
+        const orderedAreas = ['field', 'hatchery', 'reserve', 'explore']
+        $.each(orderedAreas, ( _ , areaID) => {
+            var area = this.areas[areaID]
+            if (area.isUnlocked) {
                 var areaListItem = $("<li>");
                 areaListItem.append(
                     $("<a>")
                     .attr("id", "area-" + areaID)  
-                    .attr("href", "javascript:;") 
-                    .html(areaInformation.name) 
+                    .html(area.name) 
                     .on("click", function callback() {
                         const area = $(this).attr("id").split("-")[1];  // isolate areaID
                         Game.AreaHandler.changeArea(area);
@@ -77,7 +67,7 @@ Game.AreaHandler = {
     },
 
     unlockArea(areaID) {
-        this.allAreas[areaID].object.isUnlocked = true;
+        this.areas[areaID].isUnlocked = true;
         this.setupAreaNavigationBar();  // ensure unlocked area is viewable on navigation bar.
     }
 

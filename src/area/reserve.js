@@ -1,32 +1,32 @@
 "use strict"; // execute in strict mode
 
 Game.Reserve = {
-    // Required area variables
-    id: "reserve",
-    name: "Reserve",
-    description: "A quiet space for dragons to rest and relax.",
-    isUnlocked: false,
-    // Area-specific variables
-    numberOfSlots: 5,
-
-    reserveDragons: [],
 
     init() {
-        Game.AreaHandler.addArea(this);
+        // Load Default Data
+        const data = Game.AreaData["reserve"];
+        for (var key in data) {
+            this[key] = data[key]
+        };
+
+        // Add Reserve Slots
         for (let i=0; i < this.numberOfSlots; i++) {
             this.reserveDragons[i] = undefined;
         };
+
+        Game.AreaHandler.addArea(this);
+
     },
 
-    setup() {  // load area variables from saved data
+    setup() { 
+
+
 
         if (testing) {
-            reserve.addDragon(new Dragon("ruby"));
-            reserve.addDragon(new Dragon("ruby"));
-            reserve.addDragon(new Dragon("ruby"));
-            reserve.addDragon(new Dragon("ruby"));
-            reserve.addDragon(new Dragon("ruby"));
-            reserve.addDragon(new Dragon("ruby"));
+            Game.Reserve.isUnlocked = true;
+            for (let i=0; i < 2; i++) {
+                //reserve.addDragon(new Dragon("ruby"));
+            };
         }
         
     },
@@ -63,6 +63,24 @@ Game.Reserve = {
             this.reserveDragons[index] = dragon;
         } 
         return index;
+    },
+
+    loadDragonsFromSave(dragonData) {
+        for (let i=0; i < Game.Reserve.numberOfSlots; i++) {
+            reserve.reserveDragons[i] = undefined;
+        };
+        $.each(dragonData, ( i , oldDragon) => {
+            if (oldDragon != undefined) {
+                var newDragon = new Dragon(oldDragon.element);
+                for (var key in oldDragon) {
+                    newDragon[key] = oldDragon[key];
+                };
+                reserve.reserveDragons[i] = newDragon;
+            } else {
+                reserve.reserveDragons[i] = undefined;
+            }
+            reserve.loadReserveSlot(i, newDragon)
+        });
     },
 
     loadReserveSlot(i, dragon) {

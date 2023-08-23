@@ -9,18 +9,18 @@ Game.Roster = {
         for (let i=0; i < this.numberOfSlots; i++) {
             this.rosterDragons[i] = undefined;
         };
-        this.loadRoster();
+        this.loadRosterElements();
     },
 
     setup() {  // load values from saved data.
-
+        
     },
 
     update() {  // update on game tick.
 
     },
 
-    loadRoster() {
+    loadRosterElements() {
 
         var teamDragonsCount = this.rosterDragons.filter(function(value) { return value !== undefined }).length;
 
@@ -31,12 +31,27 @@ Game.Roster = {
             .html("Team (" + teamDragonsCount + " / " + this.numberOfSlots + ")"));
         rosterID.append($("<div>").attr("id", "roster-container"))
 
-        
         $.each(this.rosterDragons, (i, dragon) => {
             this.createRosterSlot(i, dragon);
             this.updateRosterSlot(i, dragon)
         })
 
+    },
+
+    loadDragonsFromSave(dragonData) {
+        Game.Roster.numberOfSlots = dragonData.numberOfSlots;
+        var team = dragonData.dragons;
+        $.each(team, (i, oldDragon) => {
+            if (oldDragon != undefined) {
+                var newDragon = new Dragon(oldDragon.element);
+                for (var key in oldDragon) {
+                    newDragon[key] = oldDragon[key];
+                };
+                this.updateRosterSlot(i, newDragon);
+            } else {
+                this.updateRosterSlot(i, undefined);
+            }
+        });
     },
 
     createRosterSlot(i, dragon) {
@@ -122,12 +137,11 @@ Game.Roster = {
         const index = this.rosterDragons.indexOf(undefined)
         if (index != -1) {
             this.rosterDragons[index] = dragon;
-            this.loadRoster();
+            this.loadRosterElements();
         } 
         return index;
 
     }
-
 
 };
 

@@ -10,6 +10,10 @@ Game.Tooltip = {
 
     },
 
+    update() {
+
+    },
+
     showBasicDescription(description) {
         this.resetTooltip()
          // Create tooltip box.
@@ -150,14 +154,12 @@ Game.Tooltip = {
     },
 
     showEmptyTooltip() {
-        $("#tooltip-panel").empty();
-        $("#tooltip-panel").append($("<div>")
+        var tooltipID = $("#tooltip-panel");
+        tooltipID.empty();
+        // Tooltip Description
+        tooltipID.append($("<div>")
             .attr("class", "tooltip-text blank")
             .html("Extra information will appear here when you hover over features.")
         )
-
     }
-
-
-
 }

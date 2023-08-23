@@ -1,49 +1,45 @@
 "use strict"; // execute in strict mode
 
-Game.HatcherySlotData = {
-    currentTemperature: 0,
-    temperatureIncrementOnClick: 2,
-    temperatureDrain: -0.1
-}
 
 class HatcherySlot {
     // Slot for hatching eggs in the hatchery.
     constructor() {
-        this.currentTemperature = Game.HatcherySlotData.currentTemperature;
-        this.temperatureIncrementOnClick = Game.HatcherySlotData.temperatureIncrementOnClick;
-        this.temperatureDrain = Game.HatcherySlotData.temperatureDrain;
+        this.currentTemperature = Game.Hatchery.slotsData.currentTemperature;
+        this.temperatureIncrementOnClick = Game.Hatchery.slotsData.temperatureIncrementOnClick;
+        this.temperatureDrain = Game.Hatchery.slotsData.temperatureDrain;
     };
 };
 
 Game.Hatchery = {
-    // Required area variables
-    id: "hatchery",
-    name: "Hatchery",
-    description: "A small cave, protected from the outside elements.",
-    isUnlocked: false,
-    // Area-specific variables
-    numberOfSlots: 0,
-    minimumTemperature: 0,
-    maximumTemperature: 100,
-
-    HatcheryEggs: [],
-    HatcherySlots: [],
 
     init() {
+
+        // Load Default Data
+        const data = Game.AreaData["hatchery"];
+        for (var key in data) {
+            this[key] = data[key]
+        };
+
         Game.AreaHandler.addArea(this);
-        for (let i=0; i < this.numberOfSlots; i++) {
-            hatchery.addHatcherySlot(new HatcherySlot());
-        }
 
     },
 
-    setup() {  // TO ADD: load area variables from saved data
-        if (testing) {
-            Game.Hatchery.isUnlocked = true;
-            hatchery.HatcherySlots.push(new HatcherySlot);
-            hatchery.HatcherySlots.push(new HatcherySlot);
-            hatchery.addEgg(new Egg("ruby"), 0);
+    setup() {
+
+        // Add Hatchery Slots
+        for (let i=0; i < Game.Hatchery.numberOfSlots; i++) {
+            hatchery.addHatcherySlot(new HatcherySlot());
         }
+
+        if (testing) {
+            hatchery.isUnlocked = true;
+            if (hatchery.hatcherySlots.length == 0) {
+                hatchery.hatcherySlots = [];
+                hatchery.addHatcherySlot(new HatcherySlot());
+                hatchery.addHatcherySlot(new HatcherySlot());
+            }
+        }
+
     },
 
     activate() {  // load area when selected from nav bar.
@@ -60,24 +56,46 @@ Game.Hatchery = {
             .attr("id", "hatchery-grid")
         );  
         // Load hatchery slots
-        $.each(hatchery.HatcherySlots, (i, slot) => {
-            hatchery.loadSlotElements(i, slot, hatchery.HatcheryEggs[i]);
+        $.each(hatchery.hatcherySlots, (i, slot) => {
+            hatchery.loadSlotElements(i, slot, hatchery.hatcheryEggs[i]);
         });
     },
 
     update() {  // update area on game tick.
-        $.each(hatchery.HatcherySlots, (i, slot) => {
+        $.each(hatchery.hatcherySlots, (i, slot) => {
             hatchery.updateSlotElements(i, slot);
         }) 
     },
 
+    loadSlotDataFromSave(slots) {
+        $.each(slots, (i, slotData) => {
+            var slot = new HatcherySlot();
+            for (var key in slotData) {
+                slot[key] = slotData[key];
+            };
+            Game.Hatchery.hatcherySlots[i] = slot;
+        });
+    },
+
+    loadEggDataFromSave(eggs) {
+        $.each(eggs, (i, eggData) => {
+            if (eggData) {
+                var egg = new Egg(eggData.element);
+                for (var key in eggData) {
+                    egg[key] = eggData[key];
+                };
+                Game.Hatchery.hatcheryEggs[i] = egg;
+            }
+        });
+    },
+
     addHatcherySlot(slot) {
-        hatchery.HatcherySlots.push(slot);
-        hatchery.HatcheryEggs.push(undefined);
+        hatchery.hatcherySlots.push(slot);
+        hatchery.hatcheryEggs.push(undefined);
     },
 
     addEgg(egg, index) {
-        hatchery.HatcheryEggs[index] = egg;
+        hatchery.hatcheryEggs[index] = egg;
     },
 
     loadSlotElements(i, slot, egg) {
@@ -162,7 +180,7 @@ Game.Hatchery = {
                     )
                     .on("click", function() {
                         Game.Resources.PlayerResources[resourceID].amount -= 1;
-                        hatchery.HatcheryEggs[i] = new Egg(resource.element);
+                        hatchery.hatcheryEggs[i] = new Egg(resource.element);
                         Game.Tooltip.showEmptyTooltip();
                         hatchery.activate();
                 }));
@@ -229,7 +247,7 @@ Game.Hatchery = {
                     if (isReserveFull == -1) {  // If reserve is full.
                         Game.Log.addNotification("The reserve is already full - Try releasing some dragons!", "warning")
                     } else {
-                        hatchery.HatcheryEggs[i] = undefined; // remove egg from hatchery.
+                        hatchery.hatcheryEggs[i] = undefined; // remove egg from hatchery.
                         Game.Tooltip.showEmptyTooltip();
                         hatchery.activate();
                     }
@@ -258,14 +276,14 @@ Game.Hatchery = {
         // Update slot temperature.
         slot.currentTemperature = Math.max(slot.currentTemperature + slot.temperatureDrain, hatchery.minimumTemperature);
         // Update egg-related attributes, if slot has egg.
-        if (Game.Hatchery.HatcheryEggs[i]) {
+        if (Game.Hatchery.hatcheryEggs[i]) {
             // Show/hide relevant containers
             $("#slot-container-empty-"+i).attr("style", "display: none");
             $("#slot-container-full-"+i).attr("style", "display: block");
             // Update hatchery temperature
             $("#current-temperature-"+i).html("Temperature: " + Math.round(slot.currentTemperature)   + "°C");
             // Update egg-related elements
-            const egg = hatchery.HatcheryEggs[i]
+            const egg = hatchery.hatcheryEggs[i]
             if (!egg.isHatched) {
                 // Show relevant elements.
                 $("#increase-heat-button-"+i).attr("style", "display: inline-block")

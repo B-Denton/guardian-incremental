@@ -5,17 +5,20 @@ window.Game = window.Game || {};
 $.extend(Game, {
     GAME_NAME: "The Dragons' Guardian",
     // Version information
-    CURRENT_VERSION: "0.1.05",
+    CURRENT_VERSION: "0.2.05",
     ORIGINAL_VERSION: "0.1",
-    VERSION_NAME: "Bugs and Bears",
+    VERSION_NAME: "Locals Saved",
     // Number handling
     EPSILON: 1e-6,  // accuracy for floating-point equality comparisons
     MAX_SAFE_NUMBER: Math.pow(2, 36) - 1,  // for 5 decimal place precision
     // Game loop settings
     GAME_INTERVAL: 50,
+    AUTOSAVE_INTERVAL: 2000,
 });
 
 Game.Main = {
+
+    timestampAutosave: new Date(),
 
     init() {
 
@@ -27,6 +30,7 @@ Game.Main = {
         main.restartGame();
         main.restoreGameFromSave();
         main.setupGame();
+        
 
     },
 
@@ -42,6 +46,8 @@ Game.Main = {
         // Resources
         Game.Elements.init();
         Game.Resources.init();
+        Game.ActionHandler.init();
+        Game.Advancements.init();
 
         //// Areas
         explore.init();
@@ -54,14 +60,14 @@ Game.Main = {
 
     },
 
-    restoreGameFromSave() {
+    restoreGameFromSave() { 
         // Check if save data exists; if so, load it.
         if (Game.Save.savedGameExists()) {
             try {
                 Game.Save.loadGame();
-                log.addMessage("Loaded game.");
+                console.log("Loaded game.");
             } catch (err) {
-                log.addError(err);
+                console.log(err)
             }
         } else {
             $("#game-start-modal").attr("style", "display: block;")     
@@ -83,9 +89,11 @@ Game.Main = {
 
         // Start game ticks.
         setInterval(main.gameTick, Game.GAME_INTERVAL);
-
+        setInterval(main.autosave, Game.AUTOSAVE_INTERVAL);
+        
         // Load area
         Game.AreaHandler.loadCurrentArea();
+   
     },
 
     prestigeGame() {
@@ -98,29 +106,30 @@ Game.Main = {
         Game.Advancements.checkAdvancements();
         resources.update();
 
-        // Check for new unlocked areas.
-        Game.AreaHandler.updateUnlockedAreas();
-
         // Check Area Progress.
-        
         field.update();
         hatchery.update();
         reserve.update();
         explore.update();
+
+        // Update last autosave time.
+        $("#last-autosave").html("Last autosave was " + Math.round((Date.now() - Game.Main.timestampAutosave)/1000) + " seconds ago.")
+
+        
     },
 
     autosave() {
-        // Autosave handler placeholder.
+        Game.Save.saveGame();
+        main.lastAutosave = Date.now();
+        console.log("Autosave.")
     }
 
 };
 
-$(() => {
-
+window.addEventListener('load', function() {
     $("#game").show();
     main.init();
-    
-});
+}); 
 
 
 

@@ -60,12 +60,15 @@ body {
  }
 
 html, body {
-  overflow: auto;
   padding: 0px;
   margin: 0px;
   height: 100%;
 }
 
+#wrapper, #game {
+  overflow: auto;
+  height: 100%;
+}
 
 /* BUTTONS */
 
@@ -77,6 +80,7 @@ button {
   font-size: var(--font-size-small);
   text-align: center; 
   box-shadow: 0px 1px 2px 1px var(--main-color-2);
+  cursor: pointer;
 }
 
 button:active {
@@ -134,12 +138,26 @@ p {
 /* HEADER */
 
 .header {
-  padding: 20px 30px; 
+  display: flex;
+  padding: 20px 30px 10px 30px; 
   height: 2vh;
-  min-height: 20px;
+  min-height: 15px;
 }
 
-#header-bar #game-name {
+#left-header-bar, #right-header-bar {
+  min-width: 50%;
+}
+
+#left-header-bar {
+  float: left;
+}
+
+#right-header-bar {
+  float: right;
+  text-align: right;
+}
+
+#game-name, #game-version, #last-autosave, #delete-save {
   display: inline;
 }
 
@@ -148,12 +166,23 @@ p {
   padding: 0px 10px;
 }
 
+#delete-save {
+  color: var(--main-color-4);
+  cursor: pointer;
+}
+
 /* FOOTER */
 
 .footer {
+  position: fixed;
+  bottom: 0px;
+  right: 20px;
   height: 2vh;
   min-height: 20px;
-  text-align: center;
+  width: 100%;
+  text-align: right;
+  color: var(--main-color-4);
+  font-size: var(--font-size-verysmall);
 }
 
 /* GAME */
@@ -449,13 +478,14 @@ p {
 
 #area-navigation li {
   float: left;
+  cursor: pointer;
 }
 
 #area-navigation li a {
   display: block;
   color: var(--dark);
   text-decoration: none;
-  padding: 20px 30px;
+  padding: 15px 40px;
 }
 
 #area-navigation li a:hover {

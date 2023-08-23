@@ -185,7 +185,7 @@ Game.ActionsData = {
         },
         action: function() {
             log.addNotification("The warming fires inside the hatchery glow brighter.", "none")
-            Game.HatcherySlotData.temperatureIncrementOnClick += 2;
+            Game.Hatchery.slotsData.temperatureIncrementOnClick += 2;
             $.each(Game.Hatchery.HatcherySlots, ( _ , slot) => {
                 slot.temperatureIncrementOnClick += 2;
             })      
