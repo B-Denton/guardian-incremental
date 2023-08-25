@@ -138,37 +138,18 @@ p {
 /* HEADER */
 
 .header {
-  display: flex;
   padding: 20px 30px 10px 30px; 
   height: 2vh;
   min-height: 15px;
 }
 
-#left-header-bar, #right-header-bar {
-  min-width: 50%;
-}
-
-#left-header-bar {
-  float: left;
-}
-
-#right-header-bar {
-  float: right;
-  text-align: right;
-}
-
-#game-name, #game-version, #last-autosave, #delete-save {
+#game-name, #game-version, #last-autosave {
   display: inline;
 }
 
 #game-version {
   display: inline;
   padding: 0px 10px;
-}
-
-#delete-save {
-  color: var(--main-color-4);
-  cursor: pointer;
 }
 
 /* FOOTER */
@@ -205,7 +186,7 @@ p {
 
 #center-column {
   height: 90vh;
-  min-width: 500px;
+  min-width: 850px;
 }
 
 #left-column, #right-column {
@@ -482,7 +463,7 @@ p {
 }
 
 #area-navigation li a {
-  display: block;
+  display: inline-block;
   color: var(--dark);
   text-decoration: none;
   padding: 15px 40px;
@@ -490,6 +471,10 @@ p {
 
 #area-navigation li a:hover {
   background: var(--main-color-2);
+}
+
+#area-navigation li:last-child {
+  float: right;
 }
 
 div {
@@ -884,5 +869,18 @@ div {
   cursor: pointer;
 }
 
+/* SETTINGS */
+
+#settings-grid {
+  margin: 20px 0px;
+  display: grid;
+  grid-template-columns: repeat(2, 500px);
+}
+
+.settings.button {
+  margin: 10px;
+  height: 50px;
+  width: 200px;
+}
 
 

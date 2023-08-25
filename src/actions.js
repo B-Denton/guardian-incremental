@@ -13,7 +13,7 @@ Game.ActionHandler = {
 
     init() {
         $.each(Game.ActionsData, (actionID, action) => {
-            Game.ActionsList[actionID] = action;
+            Game.ActionsList[actionID] = {...action};
         });
     },
 

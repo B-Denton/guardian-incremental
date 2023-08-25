@@ -54,6 +54,7 @@ Game.Main = {
         field.init();
         hatchery.init();
         reserve.init();
+        settings.init();
 
         //// Area Handler
         Game.AreaHandler.init();
@@ -86,10 +87,11 @@ Game.Main = {
         hatchery.setup();
         reserve.setup();
         explore.setup();
+        settings.setup();
 
         // Start game ticks.
-        setInterval(main.gameTick, Game.GAME_INTERVAL);
-        setInterval(main.autosave, Game.AUTOSAVE_INTERVAL);
+        var gameInterval = setInterval(main.gameTick, Game.GAME_INTERVAL);
+        var autosaveInterval = setInterval(main.autosave, Game.AUTOSAVE_INTERVAL);
         
         // Load area
         Game.AreaHandler.loadCurrentArea();

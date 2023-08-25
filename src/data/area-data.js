@@ -58,6 +58,14 @@ Game.AreaData = {
         currentEncounter: undefined,
         encounterStarted: false,
         currentStrategy: undefined,
+    },
+
+    "settings": {
+        // Required area variables
+        id: "settings",
+        name: "Settings",
+        description: "",
+        isUnlocked: true,
     }
 
 

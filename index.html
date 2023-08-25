@@ -42,8 +42,7 @@
         <script type="text/javascript" src="src/log.js"></script>
         <script type="text/javascript" src="src/resources.js"></script>
         <script type="text/javascript" src="src/roster.js"></script>
-        <script type="text/javascript" src="src/save.js"></script>
-        <script type="text/javascript" src="src/settings.js"></script>
+        <script type="text/javascript" src="src/save.js"></script> 
         <script type="text/javascript" src="src/tooltip.js"></script>
 
         <!-- Area files-->
@@ -51,6 +50,7 @@
         <script type="text/javascript" src="src/area/field.js"></script>
         <script type="text/javascript" src="src/area/hatchery.js"></script>
         <script type="text/javascript" src="src/area/reserve.js"></script>
+        <script type="text/javascript" src="src/area/settings.js"></script>
 
 
         <!-- Simplified Reference Variables -->
@@ -66,6 +66,7 @@
             var field = Game.Field;
             var hatchery = Game.Hatchery;
             var reserve = Game.Reserve;
+            var settings = Game.Settings;
             // Gameplay
             var resources = Game.Resources;
             var playerResources = Game.Resources.PlayerResources;
@@ -82,13 +83,8 @@
 
                 <!-- Top -->
                 <div class="header" id="header-bar">
-                    <div id="left-header-bar">
-                        <h2 id="game-name"></h1>
-                        <h4 id="game-version"></h3>         
-                    </div>
-                    <div id="right-header-bar">
-                        <div id="delete-save" onclick="Game.Save.deleteSave()">Delete Local Save</div>
-                    </div>
+                    <h2 id="game-name"></h1>
+                    <h4 id="game-version"></h3>         
                 </div>
 
                 <!-- Center-->

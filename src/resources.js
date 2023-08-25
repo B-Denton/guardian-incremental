@@ -8,7 +8,7 @@ Game.Resources = {
 
     init() {
         $.each(Game.ResourceData, (resourceID, resource) => {
-            Game.Resources.PlayerResources[resourceID] = resource;
+            Game.Resources.PlayerResources[resourceID] = {...resource};
         });
     },
 

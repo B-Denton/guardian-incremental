@@ -135,7 +135,7 @@ Game.Reserve = {
             $.each(dragon.income, (resourceID, resourceIncome) => {
                 incomeContainer.append($("<div>")
                     .attr("class", "reserve income-text")
-                    .html(Game.ResourceData[resourceID].resourceName + ": " + Decimal(resourceIncome * Game.GAME_INTERVAL).toSD(4) + "/s ")
+                    .html(Game.Resources.PlayerResources[resourceID].resourceName + ": " + Decimal(resourceIncome * Game.GAME_INTERVAL).toSD(4) + "/s ")
                     .attr("style", "color:" + dragon.color)
                 );
             });

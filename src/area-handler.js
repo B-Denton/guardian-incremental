@@ -42,7 +42,7 @@ Game.AreaHandler = {
         // Reset list of navigatable areas.
         $("#areaList").empty();
         // Add unlocked areas to list in desired order.
-        const orderedAreas = ['field', 'hatchery', 'reserve', 'explore']
+        const orderedAreas = ['field', 'hatchery', 'reserve', 'explore', 'settings']
         $.each(orderedAreas, ( _ , areaID) => {
             var area = this.areas[areaID]
             if (area.isUnlocked) {

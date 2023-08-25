@@ -4,7 +4,7 @@ Game.Advancements = {
 
     init() {
         $.each(Game.AdvancementData, (advancementID, advancement) => {
-            this.AdvancementsList[advancementID] = advancement;
+            this.AdvancementsList[advancementID] = {...advancement};
         });
     },
 

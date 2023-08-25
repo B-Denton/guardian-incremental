@@ -62,7 +62,6 @@ Game.ActionsData = {
             $.each(Game.Roster.rosterDragons, (i, dragon) => {
                 if (dragon) {
                     var teamSize = Game.Roster.rosterDragons.filter(function(value) { return value !== undefined }).length;
-                    console.log(teamSize)
                     dragon.xp += Math.floor(12 / teamSize);
                     if (dragon.checkLevelUp()) {
                         dragon.levelUp();
