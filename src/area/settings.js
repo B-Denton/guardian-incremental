@@ -33,8 +33,6 @@ Game.Settings = {
 
         this.loadSettingsElements($("#settings-grid"));
 
-        //<div id="delete-save" onclick="Game.Save.deleteSave()">Delete Local Save</div>
-
     },
 
 
