@@ -16,7 +16,6 @@ Game.Explore = {
 
         if (testing) {
             explore.isUnlocked = true;
-            Game.ExploreData["forest"]["area"].isBeaten = true;
         }
         
     },

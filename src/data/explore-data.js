@@ -16,7 +16,6 @@ class Enemy {
         this.speed = {"id": "speed", "name": "Speed", "max": enemy.speed, "value": enemy.speed};
     }
 
-
 }
 
 Game.Enemies = {

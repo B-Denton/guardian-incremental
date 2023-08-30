@@ -5,6 +5,8 @@ Game.Log = {
     totalNotifications: 0,
 
     init() {
+        this.notificationList = [];
+        this.totalNotifications = 0,
         log.updateLog();
     },
 
