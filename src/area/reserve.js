@@ -4,10 +4,8 @@ Game.Reserve = {
 
     init() {
         // Load Default Data
-        const data = Game.AreaData["reserve"];
-        for (var key in data) {
-            this[key] = data[key]
-        };
+        var reserveData = structuredClone(Game.AreaData["reserve"]);
+        Game.Reserve = Object.assign(Game.Reserve, reserveData);
 
         // Add Reserve Slots
         for (let i=0; i < this.numberOfSlots; i++) {

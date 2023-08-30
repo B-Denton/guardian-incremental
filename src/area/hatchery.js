@@ -13,15 +13,10 @@ class HatcherySlot {
 Game.Hatchery = {
 
     init() {
-
         // Load Default Data
-        const data = Game.AreaData["hatchery"];
-        for (var key in data) {
-            this[key] = data[key]
-        };
-
+        var hatcheryData = structuredClone(Game.AreaData["hatchery"]);
+        Game.Hatchery = Object.assign(Game.Hatchery, hatcheryData);
         Game.AreaHandler.addArea(this);
-
     },
 
     setup() {

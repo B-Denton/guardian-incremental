@@ -5,10 +5,8 @@ Game.Field = {
     init() {
 
         // Load Default Data
-        const data = Game.AreaData["field"];
-        for (var key in data) {
-            this[key] = data[key]
-        };
+        var fieldData = structuredClone(Game.AreaData["field"]);
+        Game.Field = Object.assign(Game.Field, fieldData);
 
         Game.AreaHandler.addArea(this);
 

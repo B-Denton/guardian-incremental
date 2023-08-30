@@ -4,10 +4,8 @@ Game.Explore = {
 
     init() {
         // Load Default Data
-        const data = Game.AreaData["explore"];
-        for (var key in data) {
-            this[key] = data[key]
-        };
+        var exploreData = structuredClone(Game.AreaData["explore"]);
+        Game.Explore = Object.assign(Game.Explore, exploreData);
 
         Game.AreaHandler.addArea(this);
     },
