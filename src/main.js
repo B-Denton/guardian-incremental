@@ -122,7 +122,7 @@ Game.Main = {
 
     autosave() {
         Game.Save.saveGame();
-        Game.Main.lastAutosave = Date.now();
+        Game.Main.timestampAutosave = Date.now();
         console.log("Autosave.")
     }
 
