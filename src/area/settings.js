@@ -26,17 +26,44 @@ Game.Settings = {
             .attr("class", "area-description")
             .html(settings.description)
         );
-        // Create grid for hatchery slots
+        // Create grid for settings
         areaContent.append($("<div>")
             .attr("id", "settings-grid")
         );  
-
+        // Load settings
         this.loadSettingsElements($("#settings-grid"));
-
+        this.showCorrectElements();
     },
 
-
     loadSettingsElements(container) {
+
+         // Turn Autosave On
+        container.append($("<button>")
+            .attr("class", "settings button small")
+            .attr("id", "autosave-turn-on")
+            .on("click", () => {
+                if (Game.Main.autosaveInterval == undefined) {
+                    Game.Main.autosaveInterval = setInterval(Game.Main.autosave, Game.AUTOSAVE_INTERVAL);
+                    Game.Settings.showCorrectElements();
+                }
+            })
+            .html("Turn On Autosave")
+        );
+
+        // Turn Autosave Off
+        container.append($("<button>")
+            .attr("class", "settings button small")
+            .attr("id", "autosave-turn-off")
+            .on("click", () => {
+                if (Game.Main.autosaveInterval != undefined) {
+                    clearInterval(Game.Main.autosaveInterval)
+                    Game.Main.autosaveInterval = undefined;
+                    $("#last-autosave").html("Autosave off.");
+                    Game.Settings.showCorrectElements();
+                }
+            })
+            .html("Turn Off Autosave")
+        );
 
         // Wipe Local Save
         container.append($("<button>")
@@ -48,7 +75,7 @@ Game.Settings = {
             .html("Delete Local Save")
         );
 
-        // Wipe Local Save
+        // Wipe Saved Data and Restart Game
             container.append($("<button>")
             .attr("class", "settings button small")
             .attr("id", "restart-game")
@@ -60,6 +87,16 @@ Game.Settings = {
             .html("Restart Game")
         );
 
+    },
+
+    showCorrectElements() {   
+        if (Game.Main.autosaveInterval == undefined) {  
+            $("#autosave-turn-on").attr("style", "display: block");
+            $("#autosave-turn-off").attr("style", "display: none");
+        } else {
+            $("#autosave-turn-on").attr("style", "display: none");
+            $("#autosave-turn-off").attr("style", "display: block");
+        }
     },
 
 }

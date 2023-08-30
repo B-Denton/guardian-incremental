@@ -18,6 +18,8 @@ $.extend(Game, {
 
 Game.Main = {
 
+    gameInterval: undefined,  // Hold interval ID for game loop
+    autosaveInterval: undefined, // Hold interval ID for autosave loop
     timestampAutosave: new Date(),
 
     init() {
@@ -90,8 +92,8 @@ Game.Main = {
         settings.setup();
 
         // Start game ticks.
-        var gameInterval = setInterval(main.gameTick, Game.GAME_INTERVAL);
-        var autosaveInterval = setInterval(main.autosave, Game.AUTOSAVE_INTERVAL);
+        this.gameInterval = setInterval(main.gameTick, Game.GAME_INTERVAL);
+        this.autosaveInterval = setInterval(main.autosave, Game.AUTOSAVE_INTERVAL);
         
         // Load area
         Game.AreaHandler.loadCurrentArea();
@@ -115,7 +117,10 @@ Game.Main = {
         explore.update();
 
         // Update last autosave time.
-        $("#last-autosave").html("Last autosave was " + Math.round((Date.now() - Game.Main.timestampAutosave)/1000) + " seconds ago.")
+        if (Game.Main.autosaveInterval != undefined) {
+            $("#last-autosave").html("Last autosave was " + Math.round((Date.now() - Game.Main.timestampAutosave)/1000) + " seconds ago.")
+        }
+        
 
         
     },
