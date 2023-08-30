@@ -138,6 +138,7 @@ p {
 /* HEADER */
 
 .header {
+  display: block;
   padding: 20px 30px 20px 30px; 
   height: 2vh;
   min-height: 15px;
