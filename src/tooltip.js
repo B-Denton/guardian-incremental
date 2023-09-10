@@ -112,7 +112,7 @@ Game.Tooltip = {
         $.each(dragon.release, (resourceID, releaseValue) => {
             tooltipContainer.append($("<div>")
                 .attr("class", "reserve tooltip-text produce")
-                .html("+ " + releaseValue + " " + Game.Resource.playerResources[resourceID].resourceName)
+                .html("+ " + releaseValue + " " + Game.Resources.PlayerResources[resourceID].resourceName)
             );
         });
     },

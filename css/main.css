@@ -32,9 +32,9 @@
   --font-color-warning: var(--enemy-color-6);
 
   --resource-player-color: #7a0d7e;
-  --resource-creature-color: #b45608;
+  --resource-creature-color: #296900;
   --resource-dragon-color: #072A80;
-  --resource-egg-color: #296900;
+  --resource-egg-color:#b45608 ;
 
   --cooldownTimer: 0.5s;
 
@@ -308,27 +308,25 @@ p {
   padding: 20px 0px;
   background-color: var(--pale);
   border: 2px var(--dark) solid;
-  font-size: var(--font-size-small);
 }
 
 #game-log-title {
   padding: 15px 10px;
-  margin: -1px 15px;
-  border: 1px var(--font-color) solid;
+  margin: 0px 15px;
   text-align: center;
   font-size: var(--font-size-large);
   font-weight: bold;
 }
 
 .notification-message {
-  padding: 15px 10px;
+  padding: 12px 10px;
   margin: -1px 15px;
   border-radius: 2px;
+  font-size: var(--font-size-verysmall)
 }
 
 .notification-message.none {
   color: var(--font-color);
-  border: 1px var(--font-color) solid;
 }
 
 .notification-message.progress {

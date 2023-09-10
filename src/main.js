@@ -114,15 +114,8 @@ Game.Main = {
         field.update();
         hatchery.update();
         reserve.update();
-        explore.update();
-
-        // Update last autosave time.
-        if (Game.Main.autosaveInterval != undefined) {
-            $("#last-autosave").html("Last autosave was " + Math.round((Date.now() - Game.Main.timestampAutosave)/1000) + " seconds ago.")
-        }
-        
-
-        
+        explore.update();       
+       
     },
 
     autosave() {

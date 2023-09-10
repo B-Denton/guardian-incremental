@@ -3,7 +3,7 @@
 Game.AdvancementData = {
     // Stores information about various conditions that enable game progression,
     // and what happens when they trigger.
-    // key: advancementID, value: information
+    // key: advancementID, value: advancement data
 
 
     // AREA UNLOCKS
@@ -16,7 +16,7 @@ Game.AdvancementData = {
         },
         activate: () => {  // to run when advancement triggered. 
             // Player discovers that they can generate ruby eggs from searching debris.
-            Game.ActionsList["searchField"].produce["eggRuby"] = ["Ruby Eggs"];
+            Game.ActionsList["searchField"].produce["eggRuby"] = "Ruby Eggs";
             Game.ActionHandler.updateTooltipProduce(Game.ActionsList["searchField"]);
             // Hatchery area becomes available
             Game.AreaHandler.unlockArea("hatchery")

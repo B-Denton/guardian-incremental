@@ -26,15 +26,6 @@ Game.Hatchery = {
             hatchery.addHatcherySlot(new HatcherySlot());
         }
 
-        if (testing) {
-            hatchery.isUnlocked = true;
-            if (hatchery.hatcherySlots.length == 0) {
-                hatchery.hatcherySlots = [];
-                hatchery.addHatcherySlot(new HatcherySlot());
-                hatchery.addHatcherySlot(new HatcherySlot());
-            }
-        }
-
     },
 
     activate() {  // load area when selected from nav bar.
@@ -107,6 +98,7 @@ Game.Hatchery = {
         ); 
         // HTML for Full Hatchery Slots
         hatcherySlotID.append($("<div>")
+                                .attr("class", "full-hatchery-slot")
                                 .attr("id", "hatchery-slot-container-full-"+i));
         const fullSlotContainer = $("#hatchery-slot-container-full-"+i);
         hatchery.loadFullSlotElements(fullSlotContainer, i, slot, egg);

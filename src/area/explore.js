@@ -6,15 +6,17 @@ Game.Explore = {
         // Load Default Data
         var exploreData = structuredClone(Game.AreaData["explore"]);
         Game.Explore = Object.assign(Game.Explore, exploreData);
+        Game.Explore.hasDefeated = {};
+
+        let enemyTypes = Object.keys(Game.EnemyData);
+        $.each(enemyTypes, ( _ , enemyType) => {
+            Game.Explore.hasDefeated[enemyType] = false
+        })
 
         Game.AreaHandler.addArea(this);
     },
 
     setup() { 
-
-        if (testing) {
-            explore.isUnlocked = true;
-        }
         
     },
 
@@ -304,7 +306,7 @@ Game.Explore = {
             averageSpeed = averageSpeed / enemyTeamSize;
         };
 
-        var hasDefeatedAll = explore.currentEncounter["enemies"].every((enemy) => Game.Enemies[enemy.id].hasDefeated);
+        var hasDefeatedAll = explore.currentEncounter["enemies"].every((enemy) => Game.Explore.hasDefeated[enemy.id]);
         var hasFacedEncounter = explore.currentEncounter.encounterFaced;
 
         if (hasDefeatedAll || hasFacedEncounter) {
@@ -383,7 +385,7 @@ Game.Explore = {
                 // Update Roster values for current enemy.
                 $("#encounter-enemy-slot-" + i).attr("style", "color: " + enemy["color"] + ";")
                 $("#encounter-enemy-slot-" + i + "-name").html(enemy.name)
-                if (Game.Enemies[enemy.id].hasDefeated || hasFacedEncounter) {
+                if (Game.Explore.hasDefeated[enemy.id] || hasFacedEncounter) {
                     $("#encounter-enemy-slot-" + i + "-hp").html("HP: " + Math.max(0, enemy.hp.value) + " / " + enemy.hp.max);
                     $("#encounter-enemy-slot-" + i + "-attack").html("Attack: " + enemy.attack.value);
                     $("#encounter-enemy-slot-" + i + "-defense").html("Defense: " + enemy.defense.value);
@@ -624,7 +626,7 @@ Game.Explore = {
         }
         // Update creature Information
         $.each(explore.currentEncounter["enemies"], ( _ , enemy) => {
-            Game.Enemies[enemy.id].hasDefeated = true;
+            Game.Explore.hasDefeated[enemy.id] = true;
         })
         // Reset variables
         explore.currentEncounter = undefined;
@@ -649,7 +651,7 @@ Game.Explore = {
         Game.ExploreData[Game.Explore.currentAreaID]["encounters"][Game.Explore.currentEncounter.encounterID]["encounterFaced"] = true;
         // Reload encounter
         $.each(explore.currentEncounter["enemies"], (i, enemy) => {
-            explore.currentEncounter["enemies"][i] = new Enemy(Game.Enemies[enemy.id], enemy.name);
+            explore.currentEncounter["enemies"][i] = new Enemy(Game.EnemyData[enemy.id], enemy.name);
         })
         // Reset variables
         explore.encounterStarted = false;
@@ -782,7 +784,7 @@ Game.Explore = {
         // Calculate total experience the enemies give.
         var totalXPGained = 0;
         $.each(enemyTeam, ( _ , enemy) => {
-            totalXPGained += Game.Enemies[enemy.id].xp;
+            totalXPGained += Game.EnemyData[enemy.id].xp;
         });        
         // Distribute XP among healthy dragons, and notify player.
         var perDragonXPGained = Math.floor(totalXPGained / healthyDragonsIndices.length);

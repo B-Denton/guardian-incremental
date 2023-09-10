@@ -17,7 +17,7 @@ Game.Roster = {
     },
 
     update() {  // update on game tick.
-
+       
     },
 
     loadRosterElements() {
@@ -40,16 +40,17 @@ Game.Roster = {
 
     loadDragonsFromSave(dragonData) {
         Game.Roster.numberOfSlots = dragonData.numberOfSlots;
+        for (let i=0; i < Game.Roster.numberOfSlots; i++) {
+            Game.Roster.rosterDragons[i] = undefined;
+        };
+        
         var team = dragonData.dragons;
         $.each(team, (i, oldDragon) => {
             if (oldDragon != undefined) {
                 var newDragon = new Dragon(oldDragon.element);
-                for (var key in oldDragon) {
-                    newDragon[key] = oldDragon[key];
-                };
-                this.updateRosterSlot(i, newDragon);
-            } else {
-                this.updateRosterSlot(i, undefined);
+                var oldDragonData = structuredClone(oldDragon);
+                newDragon = Object.assign(newDragon, oldDragonData);
+                Game.Roster.addDragon(newDragon)
             }
         });
     },

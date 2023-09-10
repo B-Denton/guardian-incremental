@@ -6,26 +6,16 @@ Game.Reserve = {
         // Load Default Data
         var reserveData = structuredClone(Game.AreaData["reserve"]);
         Game.Reserve = Object.assign(Game.Reserve, reserveData);
+        Game.AreaHandler.addArea(this);
 
         // Add Reserve Slots
         for (let i=0; i < this.numberOfSlots; i++) {
             this.reserveDragons[i] = undefined;
         };
 
-        Game.AreaHandler.addArea(this);
-
     },
 
     setup() { 
-
-
-
-        if (testing) {
-            Game.Reserve.isUnlocked = true;
-            for (let i=0; i < 2; i++) {
-                //reserve.addDragon(new Dragon("ruby"));
-            };
-        }
         
     },
 
@@ -34,11 +24,11 @@ Game.Reserve = {
         areaContent.empty();
         areaContent.append($("<div>")
             .attr("class", "area-description")
-            .html(reserve.description)
+            .html(Game.Reserve.description)
         ); 
         areaContent.append($("<div>").attr("id", "reserve-grid"));  // Container for the Dragon Slots.
         $.each(this.reserveDragons, (i, dragon) => {
-            reserve.loadReserveSlot(i, dragon);  // Load slots into area.
+            Game.Reserve.loadReserveSlot(i, dragon);  // Load slots into area.
         });
     },
 
@@ -58,26 +48,22 @@ Game.Reserve = {
         // add dragon to reserve, or return -1 if reserve is full.
         const index = this.reserveDragons.indexOf(undefined)
         if (index != -1) {
-            this.reserveDragons[index] = dragon;
+            Game.Reserve.reserveDragons[index] = dragon;
         } 
         return index;
     },
 
     loadDragonsFromSave(dragonData) {
-        for (let i=0; i < Game.Reserve.numberOfSlots; i++) {
-            reserve.reserveDragons[i] = undefined;
+        for (let i = 0; i < Game.Reserve.numberOfSlots; i++) {
+            Game.Reserve.reserveDragons[i] = undefined;
         };
-        $.each(dragonData, ( i , oldDragon) => {
+        $.each(dragonData, (i, oldDragon) => {
             if (oldDragon != undefined) {
                 var newDragon = new Dragon(oldDragon.element);
-                for (var key in oldDragon) {
-                    newDragon[key] = oldDragon[key];
-                };
-                reserve.reserveDragons[i] = newDragon;
-            } else {
-                reserve.reserveDragons[i] = undefined;
-            }
-            reserve.loadReserveSlot(i, newDragon)
+                var oldDragonData = structuredClone(oldDragon);
+                newDragon = Object.assign(newDragon, oldDragonData);
+                Game.Reserve.addDragon(newDragon);
+            }  
         });
     },
 
@@ -194,7 +180,7 @@ Game.Reserve = {
                 )
                 .on("click", function() { 
                     Game.Tooltip.showEmptyTooltip();   
-                    reserve.moveDragonToRoster(i, dragon);
+                    Game.Reserve.moveDragonToRoster(i, dragon);
                 })
             );
 
@@ -213,7 +199,8 @@ Game.Reserve = {
                     }
                 )
                 .on("click", function() { 
-                    reserve.releaseDragon(i, dragon);
+                    Game.Reserve.releaseDragon(i, dragon);
+                    Game.Tooltip.showEmptyTooltip(); 
                 })
             );  
         }
@@ -245,8 +232,8 @@ Game.Reserve = {
             if (isRosterFull == -1) {  // If roster is full.
                 Game.Log.addNotification("Your roster is already full.", "warning");
             } else {
-                reserve.reserveDragons[i] = undefined; // remove dragon from reserve.
-                reserve.activate();
+                Game.Reserve.reserveDragons[i] = undefined; // remove dragon from reserve.
+                Game.Reserve.activate();
             }
         }
     },
@@ -257,7 +244,7 @@ Game.Reserve = {
             $.each(dragon.release, (resourceID, releaseReward) => {
                 resources.PlayerResources[resourceID].amount += releaseReward;
             })
-            reserve.reserveDragons[i] = undefined;
+            Game.Reserve.reserveDragons[i] = undefined;
         }
     }
 

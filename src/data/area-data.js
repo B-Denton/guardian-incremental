@@ -10,7 +10,6 @@ Game.AreaData = {
         description: "You find yourself in a small clearing.",
         isUnlocked: true,
         // Area-specific variables
-        uncoveredFirstEgg: false,
     },
 
     "hatchery": {

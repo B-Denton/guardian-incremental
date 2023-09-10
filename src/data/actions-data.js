@@ -1,7 +1,10 @@
 "use strict"; // execute in strict mode
 
-// Holds the default information about actions that the players can take to generate and spend resources.
+
 Game.ActionsData = {
+    // Holds the default information about actions 
+    // that the players can take to generate and spend resources.
+    // key: actionID, value: action data
 
     // PLAYER
 

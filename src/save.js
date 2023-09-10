@@ -9,7 +9,7 @@ Game.Save = {
             // Game version
             version: Game.CURRENT_VERSION,
             // UI
-            log: {},
+            log: Game.Log.notificationList,
             // Areas
             currentArea: "",  // Area that player is viewing at time of save [areaID]
             areas: {},  // key: areaID, value: object containing area information
@@ -17,34 +17,38 @@ Game.Save = {
             actions: {},
             advancements: {},
             resources: {},
-            roster: []
+            roster: {
+                numberOfSlots: Game.Roster.numberOfSlots,
+                dragons: {}
+            },
+            reserveDragons: {},
+            hatcherySlots: {},
+            hatcheryEggs: {}
         }
-
-        // Areas Data
+        // Store Areas Data
         saveData.currentArea = Game.AreaHandler.currentArea;
         $.each(Game.AreaHandler.areas, (areaID , area) => {
             saveData.areas[areaID] = area;
         });
 
-        // Actions Data
+        // Store Actions Data
         $.each(Game.ActionsList, (actionID, action) => {
             saveData.actions[actionID] = {
-                // Store variable information about actions  
                 isVisible: action.isVisible,
                 count: action.count,
                 cost: action.cost, 
+                produce: action.produce
             }
         });
 
-        // Advancements Data
+        // Store Advancements Data
         $.each(Game.Advancements.AdvancementsList, (advancementID, advancement) => {
             saveData.advancements[advancementID] = {
-                // Store variable information about actions  
                 hasTriggered: advancement.hasTriggered
             }
         });
 
-        // Resources Data
+        // Store Resources Data
         $.each(Game.Resources.PlayerResources, (resourceID, resource) => {
             saveData.resources[resourceID] = {
                 amount: resource.amount,
@@ -54,17 +58,45 @@ Game.Save = {
             }
         });
 
-        // Roster Data
-        saveData.roster = {
-            numberOfSlots: Game.Roster.numberOfSlots,
-            dragons: Game.Roster.rosterDragons
-        }
+        // Store Hatchery Slots Data
+        $.each(Game.Hatchery.hatcherySlots, (i , slot) => {
+            if (slot) {
+                saveData.hatcherySlots[i] = {};
+                $.each(Object.entries(slot), ( _ , [key, value]) => {
+                    saveData.hatcherySlots[i][key] = value;
+                })
+            }
+        });
 
-        // Log Data
-        saveData.log = {
-            notificationList: Game.Log.notificationList,
-            totalNotifications: Game.Log.totalNotifications
-        }
+        // Store Hatchery Egg Data
+        $.each(Game.Hatchery.hatcheryEggs, (i , egg) => {
+            if (egg) {
+                saveData.hatcheryEggs[i] = {};
+                $.each(Object.entries(egg), ( _ , [key, value]) => {
+                    saveData.hatcheryEggs[i][key] = value;
+                })
+            }
+        });
+
+        //// Store Reserve Dragons Data 
+        $.each(Game.Reserve.reserveDragons, (i , dragon) => {
+            if (dragon) {
+                saveData.reserveDragons[i] = {};
+                $.each(Object.entries(dragon), ( _ , [key, value]) => {
+                    saveData.reserveDragons[i][key] = value;
+                })
+            }
+        });
+      
+        //// Store Roster Dragons Data
+        $.each(Game.Roster.rosterDragons, (i , dragon) => {
+            if (dragon) {
+                saveData.roster.dragons[i] = {};
+                $.each(Object.entries(dragon), ( _ , [key, value]) => {
+                    saveData.roster.dragons[i][key] = value;
+                })
+            }
+        });
 
         // Convert save object to string for localStorage compatability
         //// TO ADD: Data compression.
@@ -102,6 +134,8 @@ Game.Save = {
         // If decoding successful, load data.
         if (saveData) {
 
+            console.log("Loading Save Data...")
+
             // Areas
             Game.AreaHandler.currentArea = saveData.currentArea;
             $.each(saveData.areas, (areaID, areaInformation) => {
@@ -121,18 +155,16 @@ Game.Save = {
             //// Roster
             Game.Roster.loadDragonsFromSave(saveData.roster);
             //// Reserve
-            Game.Reserve.loadDragonsFromSave(saveData.areas.reserve.reserveDragons);
+            Game.Reserve.loadDragonsFromSave(saveData.reserveDragons);
 
             // Hatchery
             //// Slots
-            Game.Hatchery.loadSlotDataFromSave(saveData.areas.hatchery.hatcherySlots);
+            Game.Hatchery.loadSlotDataFromSave(saveData.hatcherySlots);
             //// Eggs
-            Game.Hatchery.loadEggDataFromSave(saveData.areas.hatchery.hatcheryEggs);
+            Game.Hatchery.loadEggDataFromSave(saveData.hatcheryEggs);
 
             // Notifications
             Game.Log.loadDataFromSave(saveData.log)
-
-
         }
 
     },

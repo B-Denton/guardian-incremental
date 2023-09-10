@@ -3,7 +3,7 @@
 Game.AreaHandler = {
 
     currentArea: "field" ,  // Area that player is currently viewing.
-    areas: {},  // Holds information on all game areas. key: areaID, value: dict.
+    areas: {},  // Holds information on all game areas. key: areaID, value: area reference.
 
     init() {
         this.currentArea = "field" 
